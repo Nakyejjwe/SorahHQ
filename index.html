@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sorah HQ">
+<title>Sorah HQ — Business Manager</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0e0e;
+  --surface: #161616;
+  --surface2: #1f1f1f;
+  --border: #2a2a2a;
+  --rose: #e8a598;
+  --rose-dim: #c47060;
+  --gold: #d4af37;
+  --gold-dim: #9a7f20;
+  --mint: #7ec8a4;
+  --sky: #7ab8d4;
+  --text: #f0ece4;
+  --muted: #6a6560;
+  --muted2: #4a4540;
+  --danger: #e07070;
+  --success: #7ec8a4;
+  --radius: 14px;
+  --shadow: 0 4px 32px rgba(0,0,0,0.4);
+}
+
+body.light {
+  --bg: #f5f2ee;
+  --surface: #ffffff;
+  --surface2: #f0ece6;
+  --border: #ddd6cc;
+  --text: #1a1410;
+  --muted: #7a6e64;
+  --shadow: 0 4px 24px rgba(0,0,0,0.07);
+}
+body { transition: background 0.3s, color 0.3s; }
+.theme-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 5px 10px; font-size: 0.85rem; cursor: pointer; color: var(--text); }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 80px; }
+
+/* ── HEADER ── */
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.header-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-style: italic;
+  background: linear-gradient(135deg, var(--rose), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header-right { display: flex; gap: 8px; align-items: center; }
+.header-date { font-size: 0.72rem; color: var(--muted); letter-spacing: 1px; }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex; z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.nav-btn {
+  flex: 1; border: none; background: none;
+  padding: 10px 4px 12px;
+  font-family: 'Jost', sans-serif; font-size: 0.62rem;
+  color: var(--muted); cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  transition: color .2s; border-top: 2px solid transparent;
+}
+.nav-btn .ni { font-size: 1.2rem; }
+.nav-btn.active { color: var(--rose); border-top-color: var(--rose); }
+
+/* ── MAIN ── */
+.main { padding: 16px; max-width: 700px; margin: 0 auto; }
+.tab { display: none; }
+.tab.active { display: block; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px; margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-family: 'Playfair Display', serif; font-size: 1.05rem;
+  margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  color: var(--text);
+}
+.pill {
+  font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 600;
+  padding: 2px 8px; border-radius: 20px; letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.pill-rose { background: rgba(232,165,152,0.15); color: var(--rose); }
+.pill-gold { background: rgba(212,175,55,0.15); color: var(--gold); }
+.pill-mint { background: rgba(126,200,164,0.15); color: var(--mint); }
+.pill-sky { background: rgba(122,184,212,0.15); color: var(--sky); }
+
+/* ── STATS ── */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.stat {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px;
+}
+.stat-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.stat-val { font-family: 'Playfair Display', serif; font-size: 1.25rem; }
+.c-rose { color: var(--rose); }
+.c-gold { color: var(--gold); }
+.c-mint { color: var(--mint); }
+.c-sky { color: var(--sky); }
+.c-danger { color: var(--danger); }
+
+/* ── FORMS ── */
+.fg { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+.fr { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; }
+input, select, textarea {
+  padding: 10px 12px; border: 1.5px solid var(--border);
+  border-radius: 10px; font-family: 'Jost', sans-serif;
+  font-size: 0.88rem; color: var(--text); background: var(--surface2);
+  transition: border .2s; outline: none; width: 100%;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--rose); }
+input[readonly] { opacity: 0.5; cursor: default; }
+textarea { resize: vertical; min-height: 56px; }
+select option { background: var(--surface2); }
+
+/* ── BUTTONS ── */
+.btn {
+  padding: 11px 18px; border-radius: 10px; border: none;
+  font-family: 'Jost', sans-serif; font-size: 0.85rem; font-weight: 500;
+  cursor: pointer; transition: all .2s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-rose { background: var(--rose); color: #1a0a08; }
+.btn-gold { background: var(--gold); color: #1a1000; }
+.btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn-danger { background: rgba(224,112,112,0.15); color: var(--danger); border: 1px solid rgba(224,112,112,0.3); }
+.btn-edit { background: rgba(122,184,212,0.15); color: var(--sky); border: 1px solid rgba(122,184,212,0.3); }
+.btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 8px; }
+.btn-block { width: 100%; justify-content: center; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.btn-whatsapp { background: #25D366; color: #fff; }
+
+/* ── TABLE ── */
+.tbl-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+thead { background: var(--surface2); }
+th { padding: 9px 11px; text-align: left; font-weight: 500; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
+td { padding: 10px 11px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); }
+tr:last-child td { border-bottom: none; }
+
+/* ── STATUS BADGES ── */
+.sb { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+.sb-green { background: rgba(126,200,164,0.15); color: var(--mint); }
+.sb-yellow { background: rgba(212,175,55,0.15); color: var(--gold); }
+.sb-red { background: rgba(224,112,112,0.15); color: var(--danger); }
+.sb-blue { background: rgba(122,184,212,0.15); color: var(--sky); }
+.sb-rose { background: rgba(232,165,152,0.15); color: var(--rose); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75); z-index: 200;
+  align-items: flex-end; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface); border-radius: 20px 20px 0 0;
+  width: 100%; max-height: 92vh; overflow-y: auto;
+  border-top: 1px solid var(--border);
+}
+.modal-head { padding: 18px 18px 0; display: flex; align-items: center; justify-content: space-between; }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 1rem; }
+.modal-body { padding: 14px 18px; }
+.modal-foot { padding: 12px 18px 28px; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ── EMPTY STATE ── */
+.empty { text-align: center; padding: 32px 16px; color: var(--muted); }
+.empty .ei { font-size: 2.2rem; margin-bottom: 8px; }
+.empty p { font-size: 0.82rem; }
+
+/* ── SECTION DIVIDER ── */
+.sdiv { display: flex; align-items: center; gap: 10px; margin: 18px 0 12px; }
+.sdiv span { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; white-space: nowrap; }
+.sdiv::before, .sdiv::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── PROFIT BAR ── */
+.profit-bar { height: 6px; border-radius: 3px; background: var(--border); margin-top: 6px; overflow: hidden; }
+.profit-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--rose), var(--gold)); transition: width 0.5s; }
+
+/* ── SOURCE TAGS ── */
+.source-tag { display: inline-block; padding: 1px 7px; border-radius: 6px; font-size: 0.62rem; font-weight: 600; margin-right: 4px; }
+.src-shein { background: rgba(255,100,130,0.15); color: #ff6482; }
+.src-temu { background: rgba(255,140,60,0.15); color: #ff8c3c; }
+.src-ali { background: rgba(255,50,50,0.15); color: #ff5252; }
+.src-amazon { background: rgba(255,170,0,0.15); color: #ffaa00; }
+.src-jumia { background: rgba(255,100,0,0.15); color: #ff6400; }
+.src-other { background: rgba(150,150,150,0.15); color: #999; }
+
+@media(max-width:380px) { .fr { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-logo">Sorah HQ</div>
+  <div class="header-right">
+    <span class="header-date" id="hdr-date"></span>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+  </div>
+</header>
+
+<div class="main">
+
+<!-- ══════════ DASHBOARD ══════════ -->
+<div id="tab-dash" class="tab active">
+  <div class="stats-grid">
+    <div class="stat"><div class="stat-label">Total Revenue</div><div class="stat-val c-gold" id="ds-revenue">UGX 0</div></div>
+    <div class="stat"><div class="stat-label">Total Expenses</div><div class="stat-val c-danger" id="ds-expenses">UGX 0</div></div>
+    <div class="stat"><div class="stat-label">Net Profit</div><div class="stat-val c-mint" id="ds-profit">UGX 0</div></div>
+    <div class="stat"><div class="stat-label">Active Orders</div><div class="stat-val c-rose" id="ds-orders">0</div></div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat"><div class="stat-label">Sorah Fashion</div><div class="stat-val c-rose" id="ds-sorah">UGX 0</div></div>
+    <div class="stat"><div class="stat-label">IT & Gigs</div><div class="stat-val c-sky" id="ds-it">UGX 0</div></div>
+    <div class="stat"><div class="stat-label">Digital Products</div><div class="stat-val c-gold" id="ds-digital">UGX 0</div></div>
+    <div class="stat"><div class="stat-label">Clients</div><div class="stat-val c-mint" id="ds-clients">0</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Recent Activity</div>
+    <div id="dash-activity"></div>
+  </div>
+</div>
+
+<!-- ══════════ ORDERS ══════════ -->
+<div id="tab-orders" class="tab">
+  <div class="card">
+    <div class="card-title">New Pre-Order <span class="pill pill-rose">Sorah</span></div>
+    <div class="fr">
+      <div class="fg"><label>Client Name *</label><input id="o-client" placeholder="e.g. Nalwanga Sarah"></div>
+      <div class="fg"><label>Phone *</label><input id="o-phone" type="tel" placeholder="+256 7XX XXX XXX"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Source *</label>
+        <select id="o-source">
+          <option value="shein">Shein</option>
+          <option value="temu">Temu</option>
+          <option value="ali">AliExpress</option>
+          <option value="amazon">Amazon</option>
+          <option value="jumia">Jumia</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Order Date *</label><input id="o-date" type="date"></div>
+    </div>
+    <div class="fg"><label>Item(s) Description *</label><textarea id="o-desc" placeholder="e.g. Black cargo pants size M, White crop top size S..."></textarea></div>
+    <div class="fr">
+      <div class="fg"><label>Cost Price (UGX) *</label><input id="o-cost" type="number" placeholder="What you paid" oninput="calcOrderProfit()"></div>
+      <div class="fg"><label>Selling Price (UGX) *</label><input id="o-sell" type="number" placeholder="What client pays" oninput="calcOrderProfit()"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Deposit Paid (UGX)</label><input id="o-deposit" type="number" placeholder="0" oninput="calcOrderProfit()"></div>
+      <div class="fg"><label>Balance Due</label><input id="o-balance" readonly placeholder="Auto-calc"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Expected Arrival</label><input id="o-arrival" type="date"></div>
+      <div class="fg"><label>Status</label>
+        <select id="o-status">
+          <option value="pending">Pending</option>
+          <option value="ordered">Ordered</option>
+          <option value="transit">In Transit</option>
+          <option value="arrived">Arrived</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label>Notes</label><textarea id="o-notes" placeholder="Tracking number, special requests..."></textarea></div>
+    <input type="hidden" id="o-editing-id">
+    <div class="btn-row">
+      <button class="btn btn-rose btn-block" id="o-save-btn" onclick="saveOrder()">💾 Save Order</button>
+      <button class="btn btn-ghost" id="o-cancel-btn" onclick="clearOrderForm()" style="display:none">✕ Cancel</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">All Orders</div>
+    <div class="fg">
+      <select id="o-filter" onchange="renderOrders()">
+        <option value="">All Statuses</option>
+        <option value="pending">Pending</option>
+        <option value="ordered">Ordered</option>
+        <option value="transit">In Transit</option>
+        <option value="arrived">Arrived</option>
+        <option value="delivered">Delivered</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div id="orders-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ CYCLES ══════════ -->
+<div id="tab-cycles" class="tab">
+  <div class="card">
+    <div class="card-title">New Order Cycle <span class="pill pill-gold">Profit Split</span></div>
+    <div class="fr">
+      <div class="fg"><label>Cycle Name *</label><input id="c-name" placeholder="e.g. Shein April Batch 1"></div>
+      <div class="fg"><label>Source</label>
+        <select id="c-source">
+          <option value="shein">Shein</option>
+          <option value="temu">Temu</option>
+          <option value="ali">AliExpress</option>
+          <option value="amazon">Amazon</option>
+          <option value="jumia">Jumia</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Order Date *</label><input id="c-date" type="date"></div>
+      <div class="fg"><label>Expected Arrival</label><input id="c-arrival" type="date"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Total Collected (UGX) *</label><input id="c-collected" type="number" placeholder="From all clients" oninput="calcCycle()"></div>
+      <div class="fg"><label>Total Cost (UGX) *</label><input id="c-cost" type="number" placeholder="What you paid" oninput="calcCycle()"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Shipping (UGX)</label><input id="c-shipping" type="number" placeholder="0" oninput="calcCycle()"></div>
+      <div class="fg"><label>Gross Profit</label><input id="c-gross" readonly placeholder="Auto-calc"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Points Redeemed (UGX)</label><input id="c-points" type="number" placeholder="0" oninput="calcCycle()"></div>
+      <div class="fg"><label>Discounts Applied (UGX)</label><input id="c-discount" type="number" placeholder="0" oninput="calcCycle()"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Net Cost After Deductions</label><input id="c-netcost" readonly placeholder="Auto-calc"></div>
+      <div class="fg"><label>Total Savings</label><input id="c-savings-total" readonly placeholder="Auto-calc"></div>
+    </div>
+
+    <div class="sdiv"><span>Profit Split</span></div>
+    <div class="fr">
+      <div class="fg"><label>Tithe (10%)</label><input id="c-tithe" readonly></div>
+      <div class="fg"><label>Savings (30%)</label><input id="c-savings" readonly></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Reinvest (20%)</label><input id="c-reinvest" readonly></div>
+      <div class="fg"><label>Your Salary (40%)</label><input id="c-salary" readonly></div>
+    </div>
+
+    <div class="fg"><label>Notes</label><textarea id="c-notes" placeholder="Items ordered, clients, etc..."></textarea></div>
+    <input type="hidden" id="c-editing-id">
+    <div class="btn-row">
+      <button class="btn btn-gold btn-block" id="c-save-btn" onclick="saveCycle()">💾 Save Cycle</button>
+      <button class="btn btn-ghost" id="c-cancel-btn" onclick="clearCycleForm()" style="display:none">✕ Cancel</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Cycle History</div>
+    <div id="cycles-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ CLIENTS ══════════ -->
+<div id="tab-clients" class="tab">
+  <div class="card">
+    <div class="card-title">Add Client <span class="pill pill-mint">CRM</span></div>
+    <div class="fr">
+      <div class="fg"><label>Full Name *</label><input id="cl-name" placeholder="e.g. Aisha Nakato"></div>
+      <div class="fg"><label>Phone *</label><input id="cl-phone" type="tel" placeholder="+256 7XX XXX XXX"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Type</label>
+        <select id="cl-type">
+          <option value="fashion">Sorah Fashion</option>
+          <option value="it">IT Client</option>
+          <option value="digital">Digital Product</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Location</label><input id="cl-location" placeholder="e.g. Kampala, Ntinda"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Instagram</label><input id="cl-ig" placeholder="@handle"></div>
+      <div class="fg"><label>Total Spent (UGX)</label><input id="cl-spent" type="number" placeholder="0"></div>
+    </div>
+    <div class="fg"><label>Notes</label><textarea id="cl-notes" placeholder="Preferences, sizes, special notes..."></textarea></div>
+    <input type="hidden" id="cl-editing-id">
+    <div class="btn-row">
+      <button class="btn btn-rose btn-block" id="cl-save-btn" onclick="saveClient()">💾 Save Client</button>
+      <button class="btn btn-ghost" id="cl-cancel-btn" onclick="clearClientForm()" style="display:none">✕ Cancel</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">All Clients</div>
+    <div class="fg">
+      <select id="cl-filter" onchange="renderClients()">
+        <option value="">All Types</option>
+        <option value="fashion">Fashion</option>
+        <option value="it">IT</option>
+        <option value="digital">Digital</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div id="clients-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ GIGS ══════════ -->
+<div id="tab-gigs" class="tab">
+  <div class="card">
+    <div class="card-title">New Gig / Job <span class="pill pill-sky">IT & Freelance</span></div>
+    <div class="fr">
+      <div class="fg"><label>Client / Platform *</label><input id="g-client" placeholder="e.g. Upwork, Direct Client"></div>
+      <div class="fg"><label>Category</label>
+        <select id="g-category">
+          <option value="cybersecurity">Cybersecurity</option>
+          <option value="training">IT Training</option>
+          <option value="data">Data Systems</option>
+          <option value="digital-product">Digital Product Sale</option>
+          <option value="upwork">Upwork Contract</option>
+          <option value="consulting">Consulting</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label>Description *</label><textarea id="g-desc" placeholder="What the job entails..."></textarea></div>
+    <div class="fr">
+      <div class="fg"><label>Start Date</label><input id="g-start" type="date"></div>
+      <div class="fg"><label>End / Due Date</label><input id="g-end" type="date"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Amount (UGX) *</label><input id="g-amount" type="number" placeholder="Contract value"></div>
+      <div class="fg"><label>Amount Paid (UGX)</label><input id="g-paid" type="number" placeholder="0"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Platform</label>
+        <select id="g-platform">
+          <option value="upwork">Upwork</option>
+          <option value="direct">Direct</option>
+          <option value="referral">Referral</option>
+          <option value="instagram">Instagram</option>
+          <option value="whatsapp">WhatsApp</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Status</label>
+        <select id="g-status">
+          <option value="prospect">Prospect</option>
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+          <option value="invoiced">Invoiced</option>
+          <option value="paid">Paid</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label>Notes</label><textarea id="g-notes" placeholder="Contract details, deadlines, deliverables..."></textarea></div>
+    <input type="hidden" id="g-editing-id">
+    <div class="btn-row">
+      <button class="btn btn-rose btn-block" id="g-save-btn" onclick="saveGig()">💾 Save Gig</button>
+      <button class="btn btn-ghost" id="g-cancel-btn" onclick="clearGigForm()" style="display:none">✕ Cancel</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">All Gigs & Jobs</div>
+    <div id="gigs-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ EXPENSES ══════════ -->
+<div id="tab-expenses" class="tab">
+  <div class="card">
+    <div class="card-title">Add Expense <span class="pill pill-rose">Track It</span></div>
+    <div class="fr">
+      <div class="fg"><label>Description *</label><input id="e-desc" placeholder="e.g. Shein shipping fee"></div>
+      <div class="fg"><label>Category</label>
+        <select id="e-cat">
+          <option value="shipping">Shipping</option>
+          <option value="sourcing">Sourcing / Stock</option>
+          <option value="marketing">Marketing</option>
+          <option value="tools">Tools & Subscriptions</option>
+          <option value="transport">Transport</option>
+          <option value="data">Data / Internet</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Amount (UGX) *</label><input id="e-amount" type="number" placeholder="0"></div>
+      <div class="fg"><label>Date *</label><input id="e-date" type="date"></div>
+    </div>
+    <div class="fg"><label>Stream</label>
+      <select id="e-stream">
+        <option value="sorah">Sorah Fashion</option>
+        <option value="it">IT & Gigs</option>
+        <option value="digital">Digital Products</option>
+        <option value="general">General</option>
+      </select>
+    </div>
+    <div class="fg"><label>Notes</label><input id="e-notes" placeholder="Optional notes"></div>
+    <input type="hidden" id="e-editing-id">
+    <div class="btn-row">
+      <button class="btn btn-rose btn-block" id="e-save-btn" onclick="saveExpense()">💾 Save Expense</button>
+      <button class="btn btn-ghost" id="e-cancel-btn" onclick="clearExpenseForm()" style="display:none">✕ Cancel</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Expense History</div>
+    <div id="expenses-list"></div>
+  </div>
+
+    <div class="fg"><label>Amount (UGX)</label><input id="cv-ugx" type="number" placeholder="e.g. 500000" oninput="convertCurrency()"></div>
+    <div id="cv-results" style="margin-top:12px;"></div>
+    <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">
+      <div class="card-title" style="font-size:0.9rem;margin-bottom:12px;">Convert Any Currency</div>
+      <div class="fr">
+        <div class="fg"><label>Amount</label><input id="cv-amount" type="number" placeholder="0" oninput="convertCustom()"></div>
+        <div class="fg"><label>From</label>
+          <select id="cv-from" onchange="convertCustom()">
+            <option value="UGX">UGX — Ugandan Shilling</option>
+            <option value="USD">USD — US Dollar</option>
+            <option value="AED">AED — UAE Dirham</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="CNY">CNY — Chinese Yuan</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="KES">KES — Kenyan Shilling</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>To</label>
+        <select id="cv-to" onchange="convertCustom()">
+          <option value="USD">USD — US Dollar</option>
+          <option value="AED">AED — UAE Dirham</option>
+          <option value="GBP">GBP — British Pound</option>
+          <option value="CNY">CNY — Chinese Yuan</option>
+          <option value="EUR">EUR — Euro</option>
+          <option value="UGX">UGX — Ugandan Shilling</option>
+          <option value="KES">KES — Kenyan Shilling</option>
+        </select>
+      </div>
+      <div id="cv-custom-result" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:8px;text-align:center;font-size:1.1rem;font-weight:600;color:var(--gold);">Enter amount above</div>
+      <p style="font-size:0.68rem;color:var(--muted);margin-top:8px;text-align:center;">* Rates are approximate. Always verify before transactions.</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- end main -->
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="showTab('dash',this)"><span class="ni">📊</span>Home</button>
+  <button class="nav-btn" onclick="showTab('orders',this)"><span class="ni">🛍️</span>Orders</button>
+  <button class="nav-btn" onclick="showTab('cycles',this)"><span class="ni">🔄</span>Cycles</button>
+  <button class="nav-btn" onclick="showTab('clients',this)"><span class="ni">👥</span>Clients</button>
+  <button class="nav-btn" onclick="showTab('gigs',this)"><span class="ni">💼</span>Gigs</button>
+  <button class="nav-btn" onclick="showTab('expenses',this)"><span class="ni">💸</span>Expenses</button>
+</nav>
+
+<!-- ORDER RECEIPT MODAL -->
+<div class="modal-overlay" id="order-receipt-modal">
+  <div class="modal">
+    <div id="order-receipt-content"></div>
+    <div class="modal-foot">
+      <button class="btn btn-rose" onclick="downloadOrderReceipt()" style="flex:1">⬇️ Save PDF</button>
+      <button class="btn btn-whatsapp" onclick="shareOrderWhatsApp()" style="flex:1">📲 WhatsApp</button>
+      <button class="btn btn-ghost btn-block" onclick="closeOrderReceipt()">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE ──
+let orders   = JSON.parse(localStorage.getItem('shq_orders')   || '[]');
+let cycles   = JSON.parse(localStorage.getItem('shq_cycles')   || '[]');
+let clients  = JSON.parse(localStorage.getItem('shq_clients')  || '[]');
+let gigs     = JSON.parse(localStorage.getItem('shq_gigs')     || '[]');
+let expenses = JSON.parse(localStorage.getItem('shq_expenses') || '[]');
+
+function save() {
+  localStorage.setItem('shq_orders',   JSON.stringify(orders));
+  localStorage.setItem('shq_cycles',   JSON.stringify(cycles));
+  localStorage.setItem('shq_clients',  JSON.stringify(clients));
+  localStorage.setItem('shq_gigs',     JSON.stringify(gigs));
+  localStorage.setItem('shq_expenses', JSON.stringify(expenses));
+}
+
+// ── UTILS ──
+function ugx(n) { return 'UGX ' + Number(n||0).toLocaleString(); }
+function fmtDate(d) { if(!d) return '—'; return new Date(d+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+function gid() { return Date.now().toString()+Math.random().toString(36).slice(2,6); }
+
+const sourceLabels = { shein:'Shein', temu:'Temu', ali:'AliExpress', amazon:'Amazon', jumia:'Jumia', other:'Other' };
+const sourceClass  = { shein:'src-shein', temu:'src-temu', ali:'src-ali', amazon:'src-amazon', jumia:'src-jumia', other:'src-other' };
+
+function srcTag(s) { return `<span class="source-tag ${sourceClass[s]||'src-other'}">${sourceLabels[s]||s}</span>`; }
+
+const statusColors = {
+  pending:'sb-yellow', ordered:'sb-blue', transit:'sb-blue',
+  arrived:'sb-rose', delivered:'sb-green', cancelled:'sb-red',
+  prospect:'sb-yellow', active:'sb-blue', completed:'sb-green',
+  invoiced:'sb-rose', paid:'sb-green'
+};
+
+function sb(status) { return `<span class="sb ${statusColors[status]||'sb-yellow'}">${status}</span>`; }
+
+// ── TABS ──
+function showTab(id, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(id==='dash') renderDash();
+  if(id==='orders') renderOrders();
+  if(id==='cycles') renderCycles();
+  if(id==='clients') renderClients();
+  if(id==='gigs') renderGigs();
+  if(id==='expenses') renderExpenses();
+}
+
+// ── DASHBOARD ──
+function renderDash() {
+  const totalRevenue = 
+    orders.filter(o=>o.status==='delivered').reduce((s,o)=>s+Number(o.sell||0),0) +
+    gigs.filter(g=>g.status==='paid').reduce((s,g)=>s+Number(g.paid||0),0) +
+    cycles.reduce((s,c)=>s+Number(c.collected||0),0);
+
+  const totalExpenses = expenses.reduce((s,e)=>s+Number(e.amount||0),0) +
+    orders.reduce((s,o)=>s+Number(o.cost||0),0);
+
+  const sorahRev = orders.filter(o=>o.status==='delivered').reduce((s,o)=>s+Number(o.sell||0),0) +
+    cycles.reduce((s,c)=>s+Number(c.collected||0),0);
+
+  const itRev = gigs.filter(g=>['completed','paid'].includes(g.status)).reduce((s,g)=>s+Number(g.paid||0),0);
+  const digitalRev = gigs.filter(g=>g.category==='digital-product'&&g.status==='paid').reduce((s,g)=>s+Number(g.paid||0),0);
+
+  document.getElementById('ds-revenue').textContent = ugx(totalRevenue);
+  document.getElementById('ds-expenses').textContent = ugx(totalExpenses);
+  document.getElementById('ds-profit').textContent = ugx(totalRevenue - totalExpenses);
+  document.getElementById('ds-orders').textContent = orders.filter(o=>!['delivered','cancelled'].includes(o.status)).length;
+  document.getElementById('ds-sorah').textContent = ugx(sorahRev);
+  document.getElementById('ds-it').textContent = ugx(itRev);
+  document.getElementById('ds-digital').textContent = ugx(digitalRev);
+  document.getElementById('ds-clients').textContent = clients.length;
+
+  // Recent activity
+  const all = [
+    ...orders.slice(0,3).map(o=>({date:o.date,icon:'🛍️',text:`Order: ${o.client} — ${srcTag(o.source)}`,sub:ugx(o.sell)})),
+    ...gigs.slice(0,3).map(g=>({date:g.start,icon:'💼',text:`Gig: ${g.client}`,sub:ugx(g.amount)})),
+    ...expenses.slice(0,3).map(e=>({date:e.date,icon:'💸',text:`Expense: ${e.desc}`,sub:ugx(e.amount)})),
+  ].sort((a,b)=>b.date?.localeCompare(a.date||'')||0).slice(0,8);
+
+  const el = document.getElementById('dash-activity');
+  if(!all.length) { el.innerHTML='<div class="empty"><div class="ei">✨</div><p>No activity yet. Start adding orders, gigs or expenses!</p></div>'; return; }
+  el.innerHTML = all.map(a=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
+      <span style="font-size:1.4rem">${a.icon}</span>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:0.85rem;font-weight:500;">${a.text}</div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${fmtDate(a.date)}</div>
+      </div>
+      <div style="font-size:0.82rem;color:var(--gold);font-weight:600;white-space:nowrap;">${a.sub}</div>
+    </div>
+  `).join('');
+}
+
+// ── ORDERS ──
+function calcOrderProfit() {
+  const sell = Number(document.getElementById('o-sell').value||0);
+  const cost = Number(document.getElementById('o-cost').value||0);
+  const deposit = Number(document.getElementById('o-deposit').value||0);
+  const profit = sell - cost;
+  const balance = sell - deposit;
+  const pel = document.getElementById('o-profit');
+  pel.value = profit >= 0 ? ugx(profit) + ' profit' : ugx(Math.abs(profit)) + ' loss';
+  pel.style.color = profit >= 0 ? 'var(--mint)' : 'var(--danger)';
+  const bel = document.getElementById('o-balance');
+  if(bel) { bel.value = balance > 0 ? ugx(balance) + ' due' : balance === 0 ? 'FULLY PAID ✓' : ugx(Math.abs(balance)) + ' CREDIT'; bel.style.color = balance > 0 ? 'var(--danger)' : 'var(--mint)'; }
+}
+
+function saveOrder() {
+  const client = document.getElementById('o-client').value.trim();
+  const phone = document.getElementById('o-phone').value.trim();
+  const desc = document.getElementById('o-desc').value.trim();
+  const cost = document.getElementById('o-cost').value;
+  const sell = document.getElementById('o-sell').value;
+  const date = document.getElementById('o-date').value;
+  const editingId = document.getElementById('o-editing-id').value;
+  if(!client||!phone||!desc||!cost||!sell||!date) { alert('Please fill all required (*) fields'); return; }
+  const data = {
+    client, phone, desc, cost:Number(cost), sell:Number(sell),
+    deposit: Number(document.getElementById('o-deposit').value||0),
+    source: document.getElementById('o-source').value,
+    date, arrival: document.getElementById('o-arrival').value,
+    status: document.getElementById('o-status').value,
+    notes: document.getElementById('o-notes').value.trim(),
+  };
+  if(editingId) {
+    const idx = orders.findIndex(o=>o.id===editingId);
+    if(idx!==-1) orders[idx]={...orders[idx],...data};
+  } else {
+    orders.unshift({id:gid(),...data});
+  }
+  save(); clearOrderForm(); renderOrders(); renderDash();
+}
+
+function editOrder(id) {
+  const o = orders.find(x=>x.id===id); if(!o) return;
+  document.getElementById('o-client').value = o.client;
+  document.getElementById('o-phone').value = o.phone;
+  document.getElementById('o-source').value = o.source;
+  document.getElementById('o-date').value = o.date;
+  document.getElementById('o-desc').value = o.desc;
+  document.getElementById('o-cost').value = o.cost;
+  document.getElementById('o-sell').value = o.sell;
+  document.getElementById('o-deposit').value = o.deposit||0;
+  document.getElementById('o-arrival').value = o.arrival||'';
+  document.getElementById('o-status').value = o.status;
+  document.getElementById('o-notes').value = o.notes||'';
+  document.getElementById('o-editing-id').value = id;
+  document.getElementById('o-save-btn').textContent = '💾 Update Order';
+  document.getElementById('o-cancel-btn').style.display='inline-flex';
+  calcOrderProfit();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function deleteOrder(id) {
+  if(!confirm('Delete this order?')) return;
+  orders = orders.filter(o=>o.id!==id);
+  save(); renderOrders(); renderDash();
+}
+
+function clearOrderForm() {
+  ['o-client','o-phone','o-desc','o-cost','o-sell','o-deposit','o-profit','o-arrival','o-notes','o-editing-id'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('o-source').value='shein';
+  document.getElementById('o-status').value='pending';
+  document.getElementById('o-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('o-save-btn').textContent='💾 Save Order';
+  document.getElementById('o-cancel-btn').style.display='none';
+}
+
+function renderOrders() {
+  const filter = document.getElementById('o-filter').value;
+  const list = filter ? orders.filter(o=>o.status===filter) : orders;
+  const el = document.getElementById('orders-list');
+  if(!list.length) { el.innerHTML='<div class="empty"><div class="ei">🛍️</div><p>No orders yet.</p></div>'; return; }
+  el.innerHTML = list.map(o=>`
+    <div style="padding:12px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:600;font-size:0.9rem;">${o.client} ${srcTag(o.source)}</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">${o.desc.length>60?o.desc.slice(0,60)+'...':o.desc}</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">📅 ${fmtDate(o.date)} ${o.arrival?'→ '+fmtDate(o.arrival):''}</div>
+          <div style="margin-top:4px;display:flex;align-items:center;gap:6px;">
+            ${sb(o.status)}
+            <span style="font-size:0.75rem;color:var(--gold);font-weight:600;">${ugx(o.sell)}</span>
+            <span style="font-size:0.72rem;color:${o.sell-o.cost>=0?'var(--mint)':'var(--danger)'};">(+${ugx(o.sell-o.cost)})</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:4px;flex-shrink:0;">
+          <button class="btn btn-ghost btn-sm" onclick='showOrderReceipt(orders.find(x=>x.id=="${o.id}"))'>🧾</button>
+          <button class="btn btn-edit btn-sm" onclick="editOrder('${o.id}')">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteOrder('${o.id}')">🗑</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── CYCLES ──
+function calcCycle() {
+  const collected = Number(document.getElementById('c-collected').value||0);
+  const cost = Number(document.getElementById('c-cost').value||0);
+  const shipping = Number(document.getElementById('c-shipping').value||0);
+  const points = Number(document.getElementById('c-points').value||0);
+  const discount = Number(document.getElementById('c-discount').value||0);
+  const totalDeductions = points + discount;
+  const netCost = Math.max(0, cost + shipping - totalDeductions);
+  const gross = collected - netCost;
+  const ncEl = document.getElementById('c-netcost');
+  ncEl.value = ugx(netCost);
+  ncEl.style.color = 'var(--sky)';
+  const stEl = document.getElementById('c-savings-total');
+  stEl.value = ugx(totalDeductions) + ' saved';
+  stEl.style.color = 'var(--mint)';
+  const gEl = document.getElementById('c-gross');
+  gEl.value = gross>=0 ? ugx(gross) : ugx(Math.abs(gross))+' LOSS';
+  gEl.style.color = gross>=0?'var(--mint)':'var(--danger)';
+  if(gross>0) {
+    document.getElementById('c-tithe').value   = ugx(gross*0.10);
+    document.getElementById('c-savings').value = ugx(gross*0.30);
+    document.getElementById('c-reinvest').value= ugx(gross*0.20);
+    document.getElementById('c-salary').value  = ugx(gross*0.40);
+  } else {
+    ['c-tithe','c-savings','c-reinvest','c-salary'].forEach(i=>document.getElementById(i).value='UGX 0');
+  }
+}
+
+function saveCycle() {
+  const name = document.getElementById('c-name').value.trim();
+  const collected = document.getElementById('c-collected').value;
+  const cost = document.getElementById('c-cost').value;
+  const date = document.getElementById('c-date').value;
+  const editingId = document.getElementById('c-editing-id').value;
+  if(!name||!collected||!cost||!date) { alert('Please fill all required (*) fields'); return; }
+  const shipping = Number(document.getElementById('c-shipping').value||0);
+  const gross = Number(collected) - Number(cost) - shipping;
+  const data = {
+    name, source:document.getElementById('c-source').value,
+    date, arrival:document.getElementById('c-arrival').value,
+    collected:Number(collected), cost:Number(cost), shipping, gross,
+    tithe:gross*0.10, savings:gross*0.30, reinvest:gross*0.20, salary:gross*0.40,
+    notes:document.getElementById('c-notes').value.trim(),
+  };
+  if(editingId) {
+    const idx=cycles.findIndex(c=>c.id===editingId);
+    if(idx!==-1) cycles[idx]={...cycles[idx],...data};
+  } else {
+    cycles.unshift({id:gid(),...data});
+  }
+  save(); clearCycleForm(); renderCycles(); renderDash();
+}
+
+function editCycle(id) {
+  const c=cycles.find(x=>x.id===id); if(!c) return;
+  document.getElementById('c-name').value=c.name;
+  document.getElementById('c-source').value=c.source;
+  document.getElementById('c-date').value=c.date;
+  document.getElementById('c-arrival').value=c.arrival||'';
+  document.getElementById('c-collected').value=c.collected;
+  document.getElementById('c-cost').value=c.cost;
+  document.getElementById('c-shipping').value=c.shipping||0;
+  document.getElementById('c-points').value=c.points||0;
+  document.getElementById('c-discount').value=c.discount||0;
+  document.getElementById('c-notes').value=c.notes||'';
+  document.getElementById('c-editing-id').value=id;
+  document.getElementById('c-save-btn').textContent='💾 Update Cycle';
+  document.getElementById('c-cancel-btn').style.display='inline-flex';
+  calcCycle();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function deleteCycle(id) {
+  if(!confirm('Delete this cycle?')) return;
+  cycles=cycles.filter(c=>c.id!==id);
+  save(); renderCycles(); renderDash();
+}
+
+function clearCycleForm() {
+  ['c-name','c-collected','c-cost','c-shipping','c-points','c-discount','c-netcost','c-savings-total','c-gross','c-tithe','c-savings','c-reinvest','c-salary','c-arrival','c-notes','c-editing-id'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('c-source').value='shein';
+  document.getElementById('c-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('c-save-btn').textContent='💾 Save Cycle';
+  document.getElementById('c-cancel-btn').style.display='none';
+}
+
+function renderCycles() {
+  const el=document.getElementById('cycles-list');
+  if(!cycles.length){el.innerHTML='<div class="empty"><div class="ei">🔄</div><p>No cycles yet.</p></div>';return;}
+  el.innerHTML=cycles.map(c=>`
+    <div style="padding:12px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div style="flex:1;">
+          <div style="font-weight:600;font-size:0.9rem;">${c.name} ${srcTag(c.source)}</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">📅 ${fmtDate(c.date)}</div>
+          <div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:0.75rem;">
+            <span>Collected: <strong style="color:var(--gold)">${ugx(c.collected)}</strong></span>
+            <span>Cost: <strong style="color:var(--danger)">${ugx(c.cost)}</strong></span>
+            <span>Profit: <strong style="color:${c.gross>=0?'var(--mint)':'var(--danger)'}">${ugx(c.gross)}</strong></span>
+            <span>Salary: <strong style="color:var(--rose)">${ugx(c.salary)}</strong></span>
+          </div>
+          <div class="profit-bar"><div class="profit-fill" style="width:${Math.min(100,Math.max(0,(c.gross/c.collected)*100))}%"></div></div>
+        </div>
+        <div style="display:flex;gap:4px;flex-shrink:0;">
+          <button class="btn btn-edit btn-sm" onclick="editCycle('${c.id}')">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteCycle('${c.id}')">🗑</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── CLIENTS ──
+function saveClient() {
+  const name=document.getElementById('cl-name').value.trim();
+  const phone=document.getElementById('cl-phone').value.trim();
+  const editingId=document.getElementById('cl-editing-id').value;
+  if(!name||!phone){alert('Name and phone are required');return;}
+  const data={
+    name,phone,
+    type:document.getElementById('cl-type').value,
+    location:document.getElementById('cl-location').value.trim(),
+    ig:document.getElementById('cl-ig').value.trim(),
+    spent:Number(document.getElementById('cl-spent').value||0),
+    notes:document.getElementById('cl-notes').value.trim(),
+  };
+  if(editingId){
+    const idx=clients.findIndex(c=>c.id===editingId);
+    if(idx!==-1)clients[idx]={...clients[idx],...data};
+  } else {
+    clients.unshift({id:gid(),createdAt:new Date().toISOString().split('T')[0],...data});
+  }
+  save();clearClientForm();renderClients();renderDash();
+}
+
+function editClient(id) {
+  const c=clients.find(x=>x.id===id);if(!c)return;
+  document.getElementById('cl-name').value=c.name;
+  document.getElementById('cl-phone').value=c.phone;
+  document.getElementById('cl-type').value=c.type;
+  document.getElementById('cl-location').value=c.location||'';
+  document.getElementById('cl-ig').value=c.ig||'';
+  document.getElementById('cl-spent').value=c.spent||0;
+  document.getElementById('cl-notes').value=c.notes||'';
+  document.getElementById('cl-editing-id').value=id;
+  document.getElementById('cl-save-btn').textContent='💾 Update Client';
+  document.getElementById('cl-cancel-btn').style.display='inline-flex';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function deleteClient(id) {
+  if(!confirm('Delete this client?'))return;
+  clients=clients.filter(c=>c.id!==id);
+  save();renderClients();renderDash();
+}
+
+function clearClientForm() {
+  ['cl-name','cl-phone','cl-location','cl-ig','cl-spent','cl-notes','cl-editing-id'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('cl-type').value='fashion';
+  document.getElementById('cl-save-btn').textContent='💾 Save Client';
+  document.getElementById('cl-cancel-btn').style.display='none';
+}
+
+function renderClients() {
+  const filter=document.getElementById('cl-filter').value;
+  const list=filter?clients.filter(c=>c.type===filter):clients;
+  const el=document.getElementById('clients-list');
+  if(!list.length){el.innerHTML='<div class="empty"><div class="ei">👥</div><p>No clients yet.</p></div>';return;}
+  el.innerHTML=list.map(c=>`
+    <div style="padding:12px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px;">
+      <div style="flex:1;">
+        <div style="font-weight:600;font-size:0.9rem;">${c.name}</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">📞 ${c.phone}${c.location?' · '+c.location:''}${c.ig?' · '+c.ig:''}</div>
+        <div style="font-size:0.75rem;margin-top:2px;">
+          <span class="sb ${c.type==='fashion'?'sb-rose':c.type==='it'?'sb-blue':c.type==='digital'?'sb-yellow':'sb-green'}">${c.type}</span>
+          ${c.spent>0?`<span style="color:var(--gold);font-size:0.75rem;margin-left:6px;">${ugx(c.spent)} spent</span>`:''}
+        </div>
+        ${c.notes?`<div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${c.notes}</div>`:''}
+      </div>
+      <div style="display:flex;gap:4px;flex-shrink:0;">
+        <button class="btn btn-ghost btn-sm" onclick="window.open('https://wa.me/${c.phone.replace(/\D/g,'')}','_blank')">📲</button>
+        <button class="btn btn-edit btn-sm" onclick="editClient('${c.id}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteClient('${c.id}')">🗑</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── GIGS ──
+function saveGig() {
+  const client=document.getElementById('g-client').value.trim();
+  const desc=document.getElementById('g-desc').value.trim();
+  const amount=document.getElementById('g-amount').value;
+  const editingId=document.getElementById('g-editing-id').value;
+  if(!client||!desc||!amount){alert('Please fill all required (*) fields');return;}
+  const data={
+    client,
+    category:document.getElementById('g-category').value,
+    desc,
+    start:document.getElementById('g-start').value,
+    end:document.getElementById('g-end').value,
+    amount:Number(amount),
+    paid:Number(document.getElementById('g-paid').value||0),
+    platform:document.getElementById('g-platform').value,
+    status:document.getElementById('g-status').value,
+    notes:document.getElementById('g-notes').value.trim(),
+  };
+  if(editingId){
+    const idx=gigs.findIndex(g=>g.id===editingId);
+    if(idx!==-1)gigs[idx]={...gigs[idx],...data};
+  } else {
+    gigs.unshift({id:gid(),...data});
+  }
+  save();clearGigForm();renderGigs();renderDash();
+}
+
+function editGig(id) {
+  const g=gigs.find(x=>x.id===id);if(!g)return;
+  document.getElementById('g-client').value=g.client;
+  document.getElementById('g-category').value=g.category;
+  document.getElementById('g-desc').value=g.desc;
+  document.getElementById('g-start').value=g.start||'';
+  document.getElementById('g-end').value=g.end||'';
+  document.getElementById('g-amount').value=g.amount;
+  document.getElementById('g-paid').value=g.paid||0;
+  document.getElementById('g-platform').value=g.platform;
+  document.getElementById('g-status').value=g.status;
+  document.getElementById('g-notes').value=g.notes||'';
+  document.getElementById('g-editing-id').value=id;
+  document.getElementById('g-save-btn').textContent='💾 Update Gig';
+  document.getElementById('g-cancel-btn').style.display='inline-flex';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function deleteGig(id) {
+  if(!confirm('Delete this gig?'))return;
+  gigs=gigs.filter(g=>g.id!==id);
+  save();renderGigs();renderDash();
+}
+
+function clearGigForm() {
+  ['g-client','g-desc','g-start','g-end','g-amount','g-paid','g-notes','g-editing-id'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('g-category').value='cybersecurity';
+  document.getElementById('g-platform').value='upwork';
+  document.getElementById('g-status').value='prospect';
+  document.getElementById('g-save-btn').textContent='💾 Save Gig';
+  document.getElementById('g-cancel-btn').style.display='none';
+}
+
+function renderGigs() {
+  const el=document.getElementById('gigs-list');
+  if(!gigs.length){el.innerHTML='<div class="empty"><div class="ei">💼</div><p>No gigs yet.</p></div>';return;}
+  el.innerHTML=gigs.map(g=>`
+    <div style="padding:12px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div style="flex:1;">
+          <div style="font-weight:600;font-size:0.9rem;">${g.client}</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">${g.category} · ${g.platform}</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:1px;">${g.desc.length>60?g.desc.slice(0,60)+'...':g.desc}</div>
+          <div style="margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            ${sb(g.status)}
+            <span style="color:var(--gold);font-size:0.78rem;font-weight:600;">${ugx(g.amount)}</span>
+            ${g.paid>0?`<span style="color:var(--mint);font-size:0.72rem;">Paid: ${ugx(g.paid)}</span>`:''}
+          </div>
+        </div>
+        <div style="display:flex;gap:4px;flex-shrink:0;">
+          <button class="btn btn-edit btn-sm" onclick="editGig('${g.id}')">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteGig('${g.id}')">🗑</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── EXPENSES ──
+function saveExpense() {
+  const desc=document.getElementById('e-desc').value.trim();
+  const amount=document.getElementById('e-amount').value;
+  const date=document.getElementById('e-date').value;
+  const editingId=document.getElementById('e-editing-id').value;
+  if(!desc||!amount||!date){alert('Please fill all required (*) fields');return;}
+  const data={
+    desc,amount:Number(amount),date,
+    cat:document.getElementById('e-cat').value,
+    stream:document.getElementById('e-stream').value,
+    notes:document.getElementById('e-notes').value.trim(),
+  };
+  if(editingId){
+    const idx=expenses.findIndex(e=>e.id===editingId);
+    if(idx!==-1)expenses[idx]={...expenses[idx],...data};
+  } else {
+    expenses.unshift({id:gid(),...data});
+  }
+  save();clearExpenseForm();renderExpenses();renderDash();
+}
+
+function editExpense(id) {
+  const e=expenses.find(x=>x.id===id);if(!e)return;
+  document.getElementById('e-desc').value=e.desc;
+  document.getElementById('e-amount').value=e.amount;
+  document.getElementById('e-date').value=e.date;
+  document.getElementById('e-cat').value=e.cat;
+  document.getElementById('e-stream').value=e.stream;
+  document.getElementById('e-notes').value=e.notes||'';
+  document.getElementById('e-editing-id').value=id;
+  document.getElementById('e-save-btn').textContent='💾 Update Expense';
+  document.getElementById('e-cancel-btn').style.display='inline-flex';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function deleteExpense(id) {
+  if(!confirm('Delete this expense?'))return;
+  expenses=expenses.filter(e=>e.id!==id);
+  save();renderExpenses();renderDash();
+}
+
+function clearExpenseForm() {
+  ['e-desc','e-amount','e-notes','e-editing-id'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('e-cat').value='shipping';
+  document.getElementById('e-stream').value='sorah';
+  document.getElementById('e-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('e-save-btn').textContent='💾 Save Expense';
+  document.getElementById('e-cancel-btn').style.display='none';
+}
+
+function renderExpenses() {
+  const el=document.getElementById('expenses-list');
+  if(!expenses.length){el.innerHTML='<div class="empty"><div class="ei">💸</div><p>No expenses yet.</p></div>';return;}
+  const total=expenses.reduce((s,e)=>s+e.amount,0);
+  el.innerHTML=`<div style="padding:8px 0;margin-bottom:8px;border-bottom:1px solid var(--border);font-size:0.82rem;color:var(--muted);">Total: <strong style="color:var(--danger);">${ugx(total)}</strong></div>`+
+  expenses.map(e=>`
+    <div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px;">
+      <div style="flex:1;">
+        <div style="font-weight:600;font-size:0.88rem;">${e.desc}</div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${e.cat} · ${e.stream} · ${fmtDate(e.date)}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <span style="color:var(--danger);font-weight:600;font-size:0.85rem;">${ugx(e.amount)}</span>
+        <button class="btn btn-edit btn-sm" onclick="editExpense('${e.id}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteExpense('${e.id}')">🗑</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+
+// ── THEME TOGGLE ──
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  const isLight = document.body.classList.contains('light');
+  document.getElementById('theme-btn').textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('shq_theme', isLight ? 'light' : 'dark');
+}
+
+
+
+// ── ORDER RECEIPT ──
+let currentOrderReceipt = null;
+function showOrderReceipt(o) {
+  if(!o) return;
+  currentOrderReceipt = o;
+  const balance = o.sell - (o.deposit||0);
+  document.getElementById('order-receipt-content').innerHTML = `
+    <div style="padding:24px;font-family:'Jost',sans-serif;">
+      <div style="text-align:center;padding-bottom:14px;border-bottom:2px dashed var(--border);margin-bottom:16px;">
+        <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-style:italic;background:linear-gradient(135deg,#e8a598,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Sorah HQ</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Online Pre-Order Fashion Hub · @sorah_ug</div>
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:1rem;text-align:center;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Order Receipt</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:0.8rem;margin-bottom:14px;">
+        <div><span style="display:block;font-size:0.65rem;color:var(--muted);text-transform:uppercase;">Client</span><strong>${o.client}</strong></div>
+        <div><span style="display:block;font-size:0.65rem;color:var(--muted);text-transform:uppercase;">Phone</span><strong>${o.phone}</strong></div>
+        <div><span style="display:block;font-size:0.65rem;color:var(--muted);text-transform:uppercase;">Order Date</span><strong>${fmtDate(o.date)}</strong></div>
+        <div><span style="display:block;font-size:0.65rem;color:var(--muted);text-transform:uppercase;">Source</span><strong>${sourceLabels[o.source]||o.source}</strong></div>
+        <div><span style="display:block;font-size:0.65rem;color:var(--muted);text-transform:uppercase;">Est. Arrival</span><strong>${o.arrival?fmtDate(o.arrival):'TBC'}</strong></div>
+        <div><span style="display:block;font-size:0.65rem;color:var(--muted);text-transform:uppercase;">Status</span><strong>${o.status.toUpperCase()}</strong></div>
+      </div>
+      <div style="background:var(--surface2);border-radius:10px;padding:12px;margin-bottom:14px;font-size:0.82rem;">
+        <div style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Items Ordered</div>
+        ${o.desc}
+      </div>
+      <div style="border-top:1px dashed var(--border);padding-top:12px;">
+        <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.85rem;"><span>Total Price</span><span style="font-weight:700;">${ugx(o.sell)}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.85rem;color:var(--mint);"><span>✓ Deposit Paid</span><span style="font-weight:700;">${ugx(o.deposit||0)}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:1rem;font-weight:700;border-top:2px solid var(--text);margin-top:6px;color:${balance>0?'var(--danger)':'var(--mint)'};"><span>${balance>0?'⚠ Balance Due':'✓ Fully Paid'}</span><span>${balance>0?ugx(balance):'UGX 0'}</span></div>
+      </div>
+      ${o.notes?`<div style="margin-top:10px;font-size:0.75rem;color:var(--muted);"><strong>Notes:</strong> ${o.notes}</div>`:''}
+      <div style="text-align:center;margin-top:16px;padding-top:12px;border-top:2px dashed var(--border);font-size:0.7rem;color:var(--muted);">
+        <p>Thank you for shopping with Sorah! 🌸</p>
+        <p>📞 0705284663 · @sorah_ug · Kampala, Uganda</p>
+        <p style="margin-top:4px;">Generated ${new Date().toLocaleString()}</p>
+      </div>
+    </div>
+  `;
+  document.getElementById('order-receipt-modal').classList.add('open');
+}
+function closeOrderReceipt() { document.getElementById('order-receipt-modal').classList.remove('open'); }
+function downloadOrderReceipt() {
+  const el = document.getElementById('order-receipt-content');
+  html2pdf().from(el).set({
+    margin:[8,8,8,8],
+    filename:`Sorah_Order_${currentOrderReceipt.client.replace(/\s+/g,'_')}.pdf`,
+    image:{type:'jpeg',quality:0.98},
+    html2canvas:{scale:2},
+    jsPDF:{unit:'mm',format:'a5',orientation:'portrait'},
+    pagebreak:{mode:'avoid-all'}
+  }).save();
+}
+function shareOrderWhatsApp() {
+  const o = currentOrderReceipt;
+  const balance = o.sell - (o.deposit||0);
+  const msg =
+    `🌸 *SORAH — ORDER RECEIPT*\n`+
+    `━━━━━━━━━━━━━━━━\n`+
+    `👤 *${o.client}*\n`+
+    `📅 Order Date: ${fmtDate(o.date)}\n`+
+    `🛍️ Source: ${sourceLabels[o.source]||o.source}\n`+
+    `📦 Est. Arrival: ${o.arrival?fmtDate(o.arrival):'TBC'}\n`+
+    `━━━━━━━━━━━━━━━━\n`+
+    `*Items:*\n${o.desc}\n`+
+    `━━━━━━━━━━━━━━━━\n`+
+    `💰 Total: *${ugx(o.sell)}*\n`+
+    `✅ Deposit Paid: ${ugx(o.deposit||0)}\n`+
+    `${balance>0?`⚠ Balance Due: *${ugx(balance)}*`:`✅ *FULLY PAID*`}\n`+
+    `━━━━━━━━━━━━━━━━\n`+
+    `Thank you for shopping with Sorah! 🌸\n`+
+    `📞 0705284663 · @sorah_ug`;
+  const phone = (o.phone||'').replace(/\D/g,'');
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ── INIT ──
+(function(){
+  const now=new Date();
+  document.getElementById('hdr-date').textContent=now.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+  document.getElementById('o-date').value=now.toISOString().split('T')[0];
+  document.getElementById('c-date').value=now.toISOString().split('T')[0];
+  document.getElementById('e-date').value=now.toISOString().split('T')[0];
+  document.getElementById('g-start').value=now.toISOString().split('T')[0];
+  renderDash();
+  if(localStorage.getItem('shq_theme')==='light') { document.body.classList.add('light'); document.getElementById('theme-btn').textContent='🌙'; }
+  else { document.getElementById('theme-btn').textContent='☀️'; }
+})();
+</script>
+</body>
+</html>
