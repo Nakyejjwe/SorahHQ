@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sorah-hq-v1';
+const CACHE = 'sorah-hq-v2';
 const ASSETS = [
   '/SorahHQ/',
   '/SorahHQ/index.html',
