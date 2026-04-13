@@ -7,11 +7,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Sorah HQ">
 <title>Sorah HQ — Business Manager</title>
-<link rel="manifest" href="manifest.json">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Sorah HQ">
-<link rel="apple-touch-icon" href="icon-192.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -34,7 +29,6 @@
   --radius: 14px;
   --shadow: 0 4px 32px rgba(0,0,0,0.4);
 }
-
 body.light {
   --bg: #f5f2ee;
   --surface: #ffffff;
@@ -49,7 +43,6 @@ body { transition: background 0.3s, color 0.3s; }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 80px; }
 
-/* ── HEADER ── */
 .header {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -68,32 +61,30 @@ body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text
 .header-right { display: flex; gap: 8px; align-items: center; }
 .header-date { font-size: 0.72rem; color: var(--muted); letter-spacing: 1px; }
 
-/* ── BOTTOM NAV ── */
 .bottom-nav {
   position: fixed; bottom: 0; left: 0; right: 0;
   background: var(--surface);
   border-top: 1px solid var(--border);
   display: flex; z-index: 100;
   padding-bottom: env(safe-area-inset-bottom);
+  overflow-x: auto;
 }
 .nav-btn {
-  flex: 1; border: none; background: none;
+  flex: 1; min-width: 52px; border: none; background: none;
   padding: 10px 4px 12px;
-  font-family: 'Jost', sans-serif; font-size: 0.62rem;
+  font-family: 'Jost', sans-serif; font-size: 0.58rem;
   color: var(--muted); cursor: pointer;
   display: flex; flex-direction: column; align-items: center; gap: 3px;
   letter-spacing: 0.5px; text-transform: uppercase;
   transition: color .2s; border-top: 2px solid transparent;
 }
-.nav-btn .ni { font-size: 1.2rem; }
+.nav-btn .ni { font-size: 1.1rem; }
 .nav-btn.active { color: var(--rose); border-top-color: var(--rose); }
 
-/* ── MAIN ── */
 .main { padding: 16px; max-width: 700px; margin: 0 auto; }
 .tab { display: none; }
 .tab.active { display: block; }
 
-/* ── CARDS ── */
 .card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 18px; margin-bottom: 14px;
@@ -114,7 +105,6 @@ body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text
 .pill-mint { background: rgba(126,200,164,0.15); color: var(--mint); }
 .pill-sky { background: rgba(122,184,212,0.15); color: var(--sky); }
 
-/* ── STATS ── */
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 .stat {
   background: var(--surface2); border: 1px solid var(--border);
@@ -128,7 +118,6 @@ body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text
 .c-sky { color: var(--sky); }
 .c-danger { color: var(--danger); }
 
-/* ── FORMS ── */
 .fg { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
 .fr { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; }
@@ -143,7 +132,6 @@ input[readonly] { opacity: 0.5; cursor: default; }
 textarea { resize: vertical; min-height: 56px; }
 select option { background: var(--surface2); }
 
-/* ── BUTTONS ── */
 .btn {
   padding: 11px 18px; border-radius: 10px; border: none;
   font-family: 'Jost', sans-serif; font-size: 0.85rem; font-weight: 500;
@@ -160,7 +148,6 @@ select option { background: var(--surface2); }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
 .btn-whatsapp { background: #25D366; color: #fff; }
 
-/* ── TABLE ── */
 .tbl-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
 table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
 thead { background: var(--surface2); }
@@ -168,7 +155,6 @@ th { padding: 9px 11px; text-align: left; font-weight: 500; font-size: 0.68rem; 
 td { padding: 10px 11px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); }
 tr:last-child td { border-bottom: none; }
 
-/* ── STATUS BADGES ── */
 .sb { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
 .sb-green { background: rgba(126,200,164,0.15); color: var(--mint); }
 .sb-yellow { background: rgba(212,175,55,0.15); color: var(--gold); }
@@ -176,7 +162,6 @@ tr:last-child td { border-bottom: none; }
 .sb-blue { background: rgba(122,184,212,0.15); color: var(--sky); }
 .sb-rose { background: rgba(232,165,152,0.15); color: var(--rose); }
 
-/* ── MODAL ── */
 .modal-overlay {
   display: none; position: fixed; inset: 0;
   background: rgba(0,0,0,0.75); z-index: 200;
@@ -193,21 +178,17 @@ tr:last-child td { border-bottom: none; }
 .modal-body { padding: 14px 18px; }
 .modal-foot { padding: 12px 18px 28px; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-wrap: wrap; }
 
-/* ── EMPTY STATE ── */
 .empty { text-align: center; padding: 32px 16px; color: var(--muted); }
 .empty .ei { font-size: 2.2rem; margin-bottom: 8px; }
 .empty p { font-size: 0.82rem; }
 
-/* ── SECTION DIVIDER ── */
 .sdiv { display: flex; align-items: center; gap: 10px; margin: 18px 0 12px; }
 .sdiv span { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; white-space: nowrap; }
 .sdiv::before, .sdiv::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* ── PROFIT BAR ── */
 .profit-bar { height: 6px; border-radius: 3px; background: var(--border); margin-top: 6px; overflow: hidden; }
 .profit-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--rose), var(--gold)); transition: width 0.5s; }
 
-/* ── SOURCE TAGS ── */
 .source-tag { display: inline-block; padding: 1px 7px; border-radius: 6px; font-size: 0.62rem; font-weight: 600; margin-right: 4px; }
 .src-shein { background: rgba(255,100,130,0.15); color: #ff6482; }
 .src-temu { background: rgba(255,140,60,0.15); color: #ff8c3c; }
@@ -216,7 +197,50 @@ tr:last-child td { border-bottom: none; }
 .src-jumia { background: rgba(255,100,0,0.15); color: #ff6400; }
 .src-other { background: rgba(150,150,150,0.15); color: #999; }
 
-@media(max-width:380px) { .fr { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: 1fr; } }
+/* ── SCORECARD ── */
+.sc-week-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.sc-week-nav button { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 6px 12px; font-family: 'Jost', sans-serif; font-size: 0.8rem; cursor: pointer; }
+.sc-week-label { flex: 1; text-align: center; font-size: 0.8rem; color: var(--muted); letter-spacing: 1px; }
+.sc-stream-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.sc-tab { flex: 1; min-width: 80px; padding: 8px 6px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface2); color: var(--muted); font-family: 'Jost', sans-serif; font-size: 0.72rem; cursor: pointer; text-align: center; transition: all .2s; letter-spacing: 0.5px; }
+.sc-tab.active { border-color: var(--rose); color: var(--rose); background: rgba(232,165,152,0.08); }
+.sc-metric { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+.sc-metric-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; color: var(--text); }
+.sc-metric-desc { font-size: 0.7rem; color: var(--muted); margin-bottom: 10px; }
+.sc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.sc-input-wrap label { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; display: block; }
+.sc-input-wrap input { padding: 8px 10px; font-size: 0.85rem; border-radius: 8px; border: 1.5px solid var(--border); background: var(--surface); color: var(--text); font-family: 'Jost', sans-serif; width: 100%; }
+.sc-input-wrap input:focus { border-color: var(--rose); outline: none; }
+.sc-bar-wrap { height: 5px; background: var(--border); border-radius: 3px; margin-bottom: 6px; overflow: hidden; }
+.sc-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+.sc-badge { display: inline-block; font-size: 0.65rem; font-weight: 600; padding: 2px 10px; border-radius: 20px; letter-spacing: 0.5px; }
+.sc-badge-hit { background: rgba(126,200,164,0.2); color: var(--mint); }
+.sc-badge-close { background: rgba(212,175,55,0.2); color: var(--gold); }
+.sc-badge-miss { background: rgba(224,112,112,0.2); color: var(--danger); }
+.sc-badge-none { background: var(--border); color: var(--muted); }
+.sc-auto { font-size: 0.62rem; color: var(--sky); margin-left: 6px; letter-spacing: 0.3px; }
+.sc-tip { background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.2); border-radius: 10px; padding: 12px 14px; font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+.sc-tip strong { color: var(--gold); }
+.sc-summary-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.sc-sum-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; }
+.sc-sum-label { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.sc-sum-val { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+.sc-zambia { background: linear-gradient(135deg, rgba(232,165,152,0.12), rgba(212,175,55,0.12)); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 16px; margin-top: 14px; text-align: center; }
+.sc-zambia-label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.sc-zambia-val { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); }
+.sc-zambia-sub { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+
+@media(max-width:380px) { .fr { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: 1fr; } .sc-summary-grid { grid-template-columns: 1fr; } }
+
+/* ── UPDATE BANNER ── */
+.update-banner {
+  display: none; position: fixed; top: 58px; left: 0; right: 0; z-index: 150;
+  background: var(--gold); color: #1a1000;
+  padding: 10px 16px; font-size: 0.8rem; font-weight: 500;
+  display: none; align-items: center; justify-content: space-between; gap: 10px;
+}
+.update-banner.show { display: flex; }
+.update-banner button { background: #1a1000; color: var(--gold); border: none; border-radius: 8px; padding: 6px 14px; font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -229,6 +253,11 @@ tr:last-child td { border-bottom: none; }
   </div>
 </header>
 
+<div class="update-banner" id="update-banner">
+  <span>✨ New version of Sorah HQ is ready</span>
+  <button onclick="applyUpdate()">Update now</button>
+</div>
+
 <div class="main">
 
 <!-- ══════════ DASHBOARD ══════════ -->
@@ -239,14 +268,12 @@ tr:last-child td { border-bottom: none; }
     <div class="stat"><div class="stat-label">Net Profit</div><div class="stat-val c-mint" id="ds-profit">UGX 0</div></div>
     <div class="stat"><div class="stat-label">Active Orders</div><div class="stat-val c-rose" id="ds-orders">0</div></div>
   </div>
-
   <div class="stats-grid">
     <div class="stat"><div class="stat-label">Sorah Fashion</div><div class="stat-val c-rose" id="ds-sorah">UGX 0</div></div>
     <div class="stat"><div class="stat-label">IT & Gigs</div><div class="stat-val c-sky" id="ds-it">UGX 0</div></div>
     <div class="stat"><div class="stat-label">Digital Products</div><div class="stat-val c-gold" id="ds-digital">UGX 0</div></div>
     <div class="stat"><div class="stat-label">Clients</div><div class="stat-val c-mint" id="ds-clients">0</div></div>
   </div>
-
   <div class="card">
     <div class="card-title">Recent Activity</div>
     <div id="dash-activity"></div>
@@ -264,12 +291,9 @@ tr:last-child td { border-bottom: none; }
     <div class="fr">
       <div class="fg"><label>Source *</label>
         <select id="o-source">
-          <option value="shein">Shein</option>
-          <option value="temu">Temu</option>
-          <option value="ali">AliExpress</option>
-          <option value="amazon">Amazon</option>
-          <option value="jumia">Jumia</option>
-          <option value="other">Other</option>
+          <option value="shein">Shein</option><option value="temu">Temu</option>
+          <option value="ali">AliExpress</option><option value="amazon">Amazon</option>
+          <option value="jumia">Jumia</option><option value="other">Other</option>
         </select>
       </div>
       <div class="fg"><label>Order Date *</label><input id="o-date" type="date"></div>
@@ -287,12 +311,9 @@ tr:last-child td { border-bottom: none; }
       <div class="fg"><label>Expected Arrival</label><input id="o-arrival" type="date"></div>
       <div class="fg"><label>Status</label>
         <select id="o-status">
-          <option value="pending">Pending</option>
-          <option value="ordered">Ordered</option>
-          <option value="transit">In Transit</option>
-          <option value="arrived">Arrived</option>
-          <option value="delivered">Delivered</option>
-          <option value="cancelled">Cancelled</option>
+          <option value="pending">Pending</option><option value="ordered">Ordered</option>
+          <option value="transit">In Transit</option><option value="arrived">Arrived</option>
+          <option value="delivered">Delivered</option><option value="cancelled">Cancelled</option>
         </select>
       </div>
     </div>
@@ -303,17 +324,13 @@ tr:last-child td { border-bottom: none; }
       <button class="btn btn-ghost" id="o-cancel-btn" onclick="clearOrderForm()" style="display:none">✕ Cancel</button>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">All Orders</div>
     <div class="fg">
       <select id="o-filter" onchange="renderOrders()">
-        <option value="">All Statuses</option>
-        <option value="pending">Pending</option>
-        <option value="ordered">Ordered</option>
-        <option value="transit">In Transit</option>
-        <option value="arrived">Arrived</option>
-        <option value="delivered">Delivered</option>
+        <option value="">All Statuses</option><option value="pending">Pending</option>
+        <option value="ordered">Ordered</option><option value="transit">In Transit</option>
+        <option value="arrived">Arrived</option><option value="delivered">Delivered</option>
         <option value="cancelled">Cancelled</option>
       </select>
     </div>
@@ -329,12 +346,9 @@ tr:last-child td { border-bottom: none; }
       <div class="fg"><label>Cycle Name *</label><input id="c-name" placeholder="e.g. Shein April Batch 1"></div>
       <div class="fg"><label>Source</label>
         <select id="c-source">
-          <option value="shein">Shein</option>
-          <option value="temu">Temu</option>
-          <option value="ali">AliExpress</option>
-          <option value="amazon">Amazon</option>
-          <option value="jumia">Jumia</option>
-          <option value="other">Other</option>
+          <option value="shein">Shein</option><option value="temu">Temu</option>
+          <option value="ali">AliExpress</option><option value="amazon">Amazon</option>
+          <option value="jumia">Jumia</option><option value="other">Other</option>
         </select>
       </div>
     </div>
@@ -358,7 +372,6 @@ tr:last-child td { border-bottom: none; }
       <div class="fg"><label>Net Cost After Deductions</label><input id="c-netcost" readonly placeholder="Auto-calc"></div>
       <div class="fg"><label>Total Savings</label><input id="c-savings-total" readonly placeholder="Auto-calc"></div>
     </div>
-
     <div class="sdiv"><span>Profit Split</span></div>
     <div class="fr">
       <div class="fg"><label>Tithe (10%)</label><input id="c-tithe" readonly></div>
@@ -368,7 +381,6 @@ tr:last-child td { border-bottom: none; }
       <div class="fg"><label>Reinvest (20%)</label><input id="c-reinvest" readonly></div>
       <div class="fg"><label>Your Salary (40%)</label><input id="c-salary" readonly></div>
     </div>
-
     <div class="fg"><label>Notes</label><textarea id="c-notes" placeholder="Items ordered, clients, etc..."></textarea></div>
     <input type="hidden" id="c-editing-id">
     <div class="btn-row">
@@ -376,7 +388,6 @@ tr:last-child td { border-bottom: none; }
       <button class="btn btn-ghost" id="c-cancel-btn" onclick="clearCycleForm()" style="display:none">✕ Cancel</button>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">Cycle History</div>
     <div id="cycles-list"></div>
@@ -394,10 +405,8 @@ tr:last-child td { border-bottom: none; }
     <div class="fr">
       <div class="fg"><label>Type</label>
         <select id="cl-type">
-          <option value="fashion">Sorah Fashion</option>
-          <option value="it">IT Client</option>
-          <option value="digital">Digital Product</option>
-          <option value="other">Other</option>
+          <option value="fashion">Sorah Fashion</option><option value="it">IT Client</option>
+          <option value="digital">Digital Product</option><option value="other">Other</option>
         </select>
       </div>
       <div class="fg"><label>Location</label><input id="cl-location" placeholder="e.g. Kampala, Ntinda"></div>
@@ -413,16 +422,12 @@ tr:last-child td { border-bottom: none; }
       <button class="btn btn-ghost" id="cl-cancel-btn" onclick="clearClientForm()" style="display:none">✕ Cancel</button>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">All Clients</div>
     <div class="fg">
       <select id="cl-filter" onchange="renderClients()">
-        <option value="">All Types</option>
-        <option value="fashion">Fashion</option>
-        <option value="it">IT</option>
-        <option value="digital">Digital</option>
-        <option value="other">Other</option>
+        <option value="">All Types</option><option value="fashion">Fashion</option>
+        <option value="it">IT</option><option value="digital">Digital</option><option value="other">Other</option>
       </select>
     </div>
     <div id="clients-list"></div>
@@ -437,12 +442,9 @@ tr:last-child td { border-bottom: none; }
       <div class="fg"><label>Client / Platform *</label><input id="g-client" placeholder="e.g. Upwork, Direct Client"></div>
       <div class="fg"><label>Category</label>
         <select id="g-category">
-          <option value="cybersecurity">Cybersecurity</option>
-          <option value="training">IT Training</option>
-          <option value="data">Data Systems</option>
-          <option value="digital-product">Digital Product Sale</option>
-          <option value="upwork">Upwork Contract</option>
-          <option value="consulting">Consulting</option>
+          <option value="cybersecurity">Cybersecurity</option><option value="training">IT Training</option>
+          <option value="data">Data Systems</option><option value="digital-product">Digital Product Sale</option>
+          <option value="upwork">Upwork Contract</option><option value="consulting">Consulting</option>
           <option value="other">Other</option>
         </select>
       </div>
@@ -459,22 +461,16 @@ tr:last-child td { border-bottom: none; }
     <div class="fr">
       <div class="fg"><label>Platform</label>
         <select id="g-platform">
-          <option value="upwork">Upwork</option>
-          <option value="direct">Direct</option>
-          <option value="referral">Referral</option>
-          <option value="instagram">Instagram</option>
-          <option value="whatsapp">WhatsApp</option>
-          <option value="other">Other</option>
+          <option value="upwork">Upwork</option><option value="direct">Direct</option>
+          <option value="referral">Referral</option><option value="instagram">Instagram</option>
+          <option value="whatsapp">WhatsApp</option><option value="other">Other</option>
         </select>
       </div>
       <div class="fg"><label>Status</label>
         <select id="g-status">
-          <option value="prospect">Prospect</option>
-          <option value="active">Active</option>
-          <option value="completed">Completed</option>
-          <option value="invoiced">Invoiced</option>
-          <option value="paid">Paid</option>
-          <option value="cancelled">Cancelled</option>
+          <option value="prospect">Prospect</option><option value="active">Active</option>
+          <option value="completed">Completed</option><option value="invoiced">Invoiced</option>
+          <option value="paid">Paid</option><option value="cancelled">Cancelled</option>
         </select>
       </div>
     </div>
@@ -485,7 +481,6 @@ tr:last-child td { border-bottom: none; }
       <button class="btn btn-ghost" id="g-cancel-btn" onclick="clearGigForm()" style="display:none">✕ Cancel</button>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">All Gigs & Jobs</div>
     <div id="gigs-list"></div>
@@ -500,12 +495,9 @@ tr:last-child td { border-bottom: none; }
       <div class="fg"><label>Description *</label><input id="e-desc" placeholder="e.g. Shein shipping fee"></div>
       <div class="fg"><label>Category</label>
         <select id="e-cat">
-          <option value="shipping">Shipping</option>
-          <option value="sourcing">Sourcing / Stock</option>
-          <option value="marketing">Marketing</option>
-          <option value="tools">Tools & Subscriptions</option>
-          <option value="transport">Transport</option>
-          <option value="data">Data / Internet</option>
+          <option value="shipping">Shipping</option><option value="sourcing">Sourcing / Stock</option>
+          <option value="marketing">Marketing</option><option value="tools">Tools & Subscriptions</option>
+          <option value="transport">Transport</option><option value="data">Data / Internet</option>
           <option value="other">Other</option>
         </select>
       </div>
@@ -516,10 +508,8 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div class="fg"><label>Stream</label>
       <select id="e-stream">
-        <option value="sorah">Sorah Fashion</option>
-        <option value="it">IT & Gigs</option>
-        <option value="digital">Digital Products</option>
-        <option value="general">General</option>
+        <option value="sorah">Sorah Fashion</option><option value="it">IT & Gigs</option>
+        <option value="digital">Digital Products</option><option value="general">General</option>
       </select>
     </div>
     <div class="fg"><label>Notes</label><input id="e-notes" placeholder="Optional notes"></div>
@@ -529,12 +519,12 @@ tr:last-child td { border-bottom: none; }
       <button class="btn btn-ghost" id="e-cancel-btn" onclick="clearExpenseForm()" style="display:none">✕ Cancel</button>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">Expense History</div>
     <div id="expenses-list"></div>
   </div>
-
+  <div class="card">
+    <div class="card-title">Currency Converter</div>
     <div class="fg"><label>Amount (UGX)</label><input id="cv-ugx" type="number" placeholder="e.g. 500000" oninput="convertCurrency()"></div>
     <div id="cv-results" style="margin-top:12px;"></div>
     <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">
@@ -543,31 +533,47 @@ tr:last-child td { border-bottom: none; }
         <div class="fg"><label>Amount</label><input id="cv-amount" type="number" placeholder="0" oninput="convertCustom()"></div>
         <div class="fg"><label>From</label>
           <select id="cv-from" onchange="convertCustom()">
-            <option value="UGX">UGX — Ugandan Shilling</option>
-            <option value="USD">USD — US Dollar</option>
-            <option value="AED">AED — UAE Dirham</option>
-            <option value="GBP">GBP — British Pound</option>
-            <option value="CNY">CNY — Chinese Yuan</option>
-            <option value="EUR">EUR — Euro</option>
-            <option value="KES">KES — Kenyan Shilling</option>
+            <option value="UGX">UGX</option><option value="USD">USD</option>
+            <option value="AED">AED</option><option value="GBP">GBP</option>
+            <option value="CNY">CNY</option><option value="EUR">EUR</option><option value="KES">KES</option>
           </select>
         </div>
       </div>
       <div class="fg"><label>To</label>
         <select id="cv-to" onchange="convertCustom()">
-          <option value="USD">USD — US Dollar</option>
-          <option value="AED">AED — UAE Dirham</option>
-          <option value="GBP">GBP — British Pound</option>
-          <option value="CNY">CNY — Chinese Yuan</option>
-          <option value="EUR">EUR — Euro</option>
-          <option value="UGX">UGX — Ugandan Shilling</option>
-          <option value="KES">KES — Kenyan Shilling</option>
+          <option value="USD">USD</option><option value="AED">AED</option>
+          <option value="GBP">GBP</option><option value="CNY">CNY</option>
+          <option value="EUR">EUR</option><option value="UGX">UGX</option><option value="KES">KES</option>
         </select>
       </div>
       <div id="cv-custom-result" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:8px;text-align:center;font-size:1.1rem;font-weight:600;color:var(--gold);">Enter amount above</div>
       <p style="font-size:0.68rem;color:var(--muted);margin-top:8px;text-align:center;">* Rates are approximate. Always verify before transactions.</p>
     </div>
   </div>
+</div>
+
+<!-- ══════════ SCORECARD ══════════ -->
+<div id="tab-scorecard" class="tab">
+
+  <div class="card">
+    <div class="card-title">Weekly Scorecard <span class="pill pill-gold">Measurable</span></div>
+
+    <div class="sc-week-nav">
+      <button onclick="scChangeWeek(-1)">◀</button>
+      <div class="sc-week-label" id="sc-week-label">Week 1 of 4</div>
+      <button onclick="scChangeWeek(1)">▶</button>
+    </div>
+
+    <div class="sc-stream-tabs">
+      <button class="sc-tab active" id="sc-tab-sorah" onclick="scSetStream('sorah')">🌸 Sorah</button>
+      <button class="sc-tab" id="sc-tab-it" onclick="scSetStream('it')">💼 IT</button>
+      <button class="sc-tab" id="sc-tab-digital" onclick="scSetStream('digital')">📦 Digital</button>
+      <button class="sc-tab" id="sc-tab-summary" onclick="scSetStream('summary')">📊 Summary</button>
+    </div>
+
+    <div id="sc-content"></div>
+  </div>
+
 </div>
 
 </div><!-- end main -->
@@ -580,6 +586,7 @@ tr:last-child td { border-bottom: none; }
   <button class="nav-btn" onclick="showTab('clients',this)"><span class="ni">👥</span>Clients</button>
   <button class="nav-btn" onclick="showTab('gigs',this)"><span class="ni">💼</span>Gigs</button>
   <button class="nav-btn" onclick="showTab('expenses',this)"><span class="ni">💸</span>Expenses</button>
+  <button class="nav-btn" onclick="showTab('scorecard',this)"><span class="ni">🎯</span>Goals</button>
 </nav>
 
 <!-- ORDER RECEIPT MODAL -->
@@ -601,6 +608,7 @@ let cycles   = JSON.parse(localStorage.getItem('shq_cycles')   || '[]');
 let clients  = JSON.parse(localStorage.getItem('shq_clients')  || '[]');
 let gigs     = JSON.parse(localStorage.getItem('shq_gigs')     || '[]');
 let expenses = JSON.parse(localStorage.getItem('shq_expenses') || '[]');
+let scData   = JSON.parse(localStorage.getItem('shq_scorecard') || '{}');
 
 function save() {
   localStorage.setItem('shq_orders',   JSON.stringify(orders));
@@ -608,6 +616,7 @@ function save() {
   localStorage.setItem('shq_clients',  JSON.stringify(clients));
   localStorage.setItem('shq_gigs',     JSON.stringify(gigs));
   localStorage.setItem('shq_expenses', JSON.stringify(expenses));
+  localStorage.setItem('shq_scorecard',JSON.stringify(scData));
 }
 
 // ── UTILS ──
@@ -617,7 +626,6 @@ function gid() { return Date.now().toString()+Math.random().toString(36).slice(2
 
 const sourceLabels = { shein:'Shein', temu:'Temu', ali:'AliExpress', amazon:'Amazon', jumia:'Jumia', other:'Other' };
 const sourceClass  = { shein:'src-shein', temu:'src-temu', ali:'src-ali', amazon:'src-amazon', jumia:'src-jumia', other:'src-other' };
-
 function srcTag(s) { return `<span class="source-tag ${sourceClass[s]||'src-other'}">${sourceLabels[s]||s}</span>`; }
 
 const statusColors = {
@@ -626,7 +634,6 @@ const statusColors = {
   prospect:'sb-yellow', active:'sb-blue', completed:'sb-green',
   invoiced:'sb-rose', paid:'sb-green'
 };
-
 function sb(status) { return `<span class="sb ${statusColors[status]||'sb-yellow'}">${status}</span>`; }
 
 // ── TABS ──
@@ -641,24 +648,21 @@ function showTab(id, btn) {
   if(id==='clients') renderClients();
   if(id==='gigs') renderGigs();
   if(id==='expenses') renderExpenses();
+  if(id==='scorecard') renderScorecard();
 }
 
 // ── DASHBOARD ──
 function renderDash() {
-  const totalRevenue = 
+  const totalRevenue =
     orders.filter(o=>o.status==='delivered').reduce((s,o)=>s+Number(o.sell||0),0) +
     gigs.filter(g=>g.status==='paid').reduce((s,g)=>s+Number(g.paid||0),0) +
     cycles.reduce((s,c)=>s+Number(c.collected||0),0);
-
   const totalExpenses = expenses.reduce((s,e)=>s+Number(e.amount||0),0) +
     orders.reduce((s,o)=>s+Number(o.cost||0),0);
-
   const sorahRev = orders.filter(o=>o.status==='delivered').reduce((s,o)=>s+Number(o.sell||0),0) +
     cycles.reduce((s,c)=>s+Number(c.collected||0),0);
-
   const itRev = gigs.filter(g=>['completed','paid'].includes(g.status)).reduce((s,g)=>s+Number(g.paid||0),0);
   const digitalRev = gigs.filter(g=>g.category==='digital-product'&&g.status==='paid').reduce((s,g)=>s+Number(g.paid||0),0);
-
   document.getElementById('ds-revenue').textContent = ugx(totalRevenue);
   document.getElementById('ds-expenses').textContent = ugx(totalExpenses);
   document.getElementById('ds-profit').textContent = ugx(totalRevenue - totalExpenses);
@@ -667,457 +671,176 @@ function renderDash() {
   document.getElementById('ds-it').textContent = ugx(itRev);
   document.getElementById('ds-digital').textContent = ugx(digitalRev);
   document.getElementById('ds-clients').textContent = clients.length;
-
-  // Recent activity
   const all = [
     ...orders.slice(0,3).map(o=>({date:o.date,icon:'🛍️',text:`Order: ${o.client} — ${srcTag(o.source)}`,sub:ugx(o.sell)})),
     ...gigs.slice(0,3).map(g=>({date:g.start,icon:'💼',text:`Gig: ${g.client}`,sub:ugx(g.amount)})),
     ...expenses.slice(0,3).map(e=>({date:e.date,icon:'💸',text:`Expense: ${e.desc}`,sub:ugx(e.amount)})),
   ].sort((a,b)=>b.date?.localeCompare(a.date||'')||0).slice(0,8);
-
   const el = document.getElementById('dash-activity');
   if(!all.length) { el.innerHTML='<div class="empty"><div class="ei">✨</div><p>No activity yet. Start adding orders, gigs or expenses!</p></div>'; return; }
   el.innerHTML = all.map(a=>`
     <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
       <span style="font-size:1.4rem">${a.icon}</span>
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:0.85rem;font-weight:500;">${a.text}</div>
-        <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${fmtDate(a.date)}</div>
-      </div>
+      <div style="flex:1;min-width:0;"><div style="font-size:0.85rem;font-weight:500;">${a.text}</div><div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${fmtDate(a.date)}</div></div>
       <div style="font-size:0.82rem;color:var(--gold);font-weight:600;white-space:nowrap;">${a.sub}</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 // ── ORDERS ──
 function calcOrderProfit() {
-  const sell = Number(document.getElementById('o-sell').value||0);
-  const cost = Number(document.getElementById('o-cost').value||0);
-  const deposit = Number(document.getElementById('o-deposit').value||0);
-  const profit = sell - cost;
-  const balance = sell - deposit;
-  const pel = document.getElementById('o-profit');
-  pel.value = profit >= 0 ? ugx(profit) + ' profit' : ugx(Math.abs(profit)) + ' loss';
-  pel.style.color = profit >= 0 ? 'var(--mint)' : 'var(--danger)';
-  const bel = document.getElementById('o-balance');
-  if(bel) { bel.value = balance > 0 ? ugx(balance) + ' due' : balance === 0 ? 'FULLY PAID ✓' : ugx(Math.abs(balance)) + ' CREDIT'; bel.style.color = balance > 0 ? 'var(--danger)' : 'var(--mint)'; }
+  const sell=Number(document.getElementById('o-sell').value||0);
+  const cost=Number(document.getElementById('o-cost').value||0);
+  const deposit=Number(document.getElementById('o-deposit').value||0);
+  const balance=sell-deposit;
+  const bel=document.getElementById('o-balance');
+  if(bel){bel.value=balance>0?ugx(balance)+' due':balance===0?'FULLY PAID ✓':ugx(Math.abs(balance))+' CREDIT';bel.style.color=balance>0?'var(--danger)':'var(--mint)';}
 }
-
 function saveOrder() {
-  const client = document.getElementById('o-client').value.trim();
-  const phone = document.getElementById('o-phone').value.trim();
-  const desc = document.getElementById('o-desc').value.trim();
-  const cost = document.getElementById('o-cost').value;
-  const sell = document.getElementById('o-sell').value;
-  const date = document.getElementById('o-date').value;
-  const editingId = document.getElementById('o-editing-id').value;
-  if(!client||!phone||!desc||!cost||!sell||!date) { alert('Please fill all required (*) fields'); return; }
-  const data = {
-    client, phone, desc, cost:Number(cost), sell:Number(sell),
-    deposit: Number(document.getElementById('o-deposit').value||0),
-    source: document.getElementById('o-source').value,
-    date, arrival: document.getElementById('o-arrival').value,
-    status: document.getElementById('o-status').value,
-    notes: document.getElementById('o-notes').value.trim(),
-  };
-  if(editingId) {
-    const idx = orders.findIndex(o=>o.id===editingId);
-    if(idx!==-1) orders[idx]={...orders[idx],...data};
-  } else {
-    orders.unshift({id:gid(),...data});
-  }
-  save(); clearOrderForm(); renderOrders(); renderDash();
+  const client=document.getElementById('o-client').value.trim();
+  const phone=document.getElementById('o-phone').value.trim();
+  const desc=document.getElementById('o-desc').value.trim();
+  const cost=document.getElementById('o-cost').value;
+  const sell=document.getElementById('o-sell').value;
+  const date=document.getElementById('o-date').value;
+  const editingId=document.getElementById('o-editing-id').value;
+  if(!client||!phone||!desc||!cost||!sell||!date){alert('Please fill all required (*) fields');return;}
+  const data={client,phone,desc,cost:Number(cost),sell:Number(sell),deposit:Number(document.getElementById('o-deposit').value||0),source:document.getElementById('o-source').value,date,arrival:document.getElementById('o-arrival').value,status:document.getElementById('o-status').value,notes:document.getElementById('o-notes').value.trim()};
+  if(editingId){const idx=orders.findIndex(o=>o.id===editingId);if(idx!==-1)orders[idx]={...orders[idx],...data};}
+  else{orders.unshift({id:gid(),...data});}
+  save();clearOrderForm();renderOrders();renderDash();
 }
-
 function editOrder(id) {
-  const o = orders.find(x=>x.id===id); if(!o) return;
-  document.getElementById('o-client').value = o.client;
-  document.getElementById('o-phone').value = o.phone;
-  document.getElementById('o-source').value = o.source;
-  document.getElementById('o-date').value = o.date;
-  document.getElementById('o-desc').value = o.desc;
-  document.getElementById('o-cost').value = o.cost;
-  document.getElementById('o-sell').value = o.sell;
-  document.getElementById('o-deposit').value = o.deposit||0;
-  document.getElementById('o-arrival').value = o.arrival||'';
-  document.getElementById('o-status').value = o.status;
-  document.getElementById('o-notes').value = o.notes||'';
-  document.getElementById('o-editing-id').value = id;
-  document.getElementById('o-save-btn').textContent = '💾 Update Order';
-  document.getElementById('o-cancel-btn').style.display='inline-flex';
-  calcOrderProfit();
-  window.scrollTo({top:0,behavior:'smooth'});
+  const o=orders.find(x=>x.id===id);if(!o)return;
+  document.getElementById('o-client').value=o.client;document.getElementById('o-phone').value=o.phone;document.getElementById('o-source').value=o.source;document.getElementById('o-date').value=o.date;document.getElementById('o-desc').value=o.desc;document.getElementById('o-cost').value=o.cost;document.getElementById('o-sell').value=o.sell;document.getElementById('o-deposit').value=o.deposit||0;document.getElementById('o-arrival').value=o.arrival||'';document.getElementById('o-status').value=o.status;document.getElementById('o-notes').value=o.notes||'';document.getElementById('o-editing-id').value=id;document.getElementById('o-save-btn').textContent='💾 Update Order';document.getElementById('o-cancel-btn').style.display='inline-flex';calcOrderProfit();window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function deleteOrder(id) {
-  if(!confirm('Delete this order?')) return;
-  orders = orders.filter(o=>o.id!==id);
-  save(); renderOrders(); renderDash();
-}
-
+function deleteOrder(id) {if(!confirm('Delete this order?'))return;orders=orders.filter(o=>o.id!==id);save();renderOrders();renderDash();}
 function clearOrderForm() {
-  ['o-client','o-phone','o-desc','o-cost','o-sell','o-deposit','o-profit','o-arrival','o-notes','o-editing-id'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('o-source').value='shein';
-  document.getElementById('o-status').value='pending';
-  document.getElementById('o-date').value=new Date().toISOString().split('T')[0];
-  document.getElementById('o-save-btn').textContent='💾 Save Order';
-  document.getElementById('o-cancel-btn').style.display='none';
+  ['o-client','o-phone','o-desc','o-cost','o-sell','o-deposit','o-balance','o-arrival','o-notes','o-editing-id'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
+  document.getElementById('o-source').value='shein';document.getElementById('o-status').value='pending';document.getElementById('o-date').value=new Date().toISOString().split('T')[0];document.getElementById('o-save-btn').textContent='💾 Save Order';document.getElementById('o-cancel-btn').style.display='none';
 }
-
 function renderOrders() {
-  const filter = document.getElementById('o-filter').value;
-  const list = filter ? orders.filter(o=>o.status===filter) : orders;
-  const el = document.getElementById('orders-list');
-  if(!list.length) { el.innerHTML='<div class="empty"><div class="ei">🛍️</div><p>No orders yet.</p></div>'; return; }
-  el.innerHTML = list.map(o=>`
+  const filter=document.getElementById('o-filter').value;
+  const list=filter?orders.filter(o=>o.status===filter):orders;
+  const el=document.getElementById('orders-list');
+  if(!list.length){el.innerHTML='<div class="empty"><div class="ei">🛍️</div><p>No orders yet.</p></div>';return;}
+  el.innerHTML=list.map(o=>`
     <div style="padding:12px 0;border-bottom:1px solid var(--border);">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
-        <div style="flex:1;min-width:0;">
-          <div style="font-weight:600;font-size:0.9rem;">${o.client} ${srcTag(o.source)}</div>
-          <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">${o.desc.length>60?o.desc.slice(0,60)+'...':o.desc}</div>
-          <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">📅 ${fmtDate(o.date)} ${o.arrival?'→ '+fmtDate(o.arrival):''}</div>
-          <div style="margin-top:4px;display:flex;align-items:center;gap:6px;">
-            ${sb(o.status)}
-            <span style="font-size:0.75rem;color:var(--gold);font-weight:600;">${ugx(o.sell)}</span>
-            <span style="font-size:0.72rem;color:${o.sell-o.cost>=0?'var(--mint)':'var(--danger)'};">(+${ugx(o.sell-o.cost)})</span>
-          </div>
-        </div>
-        <div style="display:flex;gap:4px;flex-shrink:0;">
-          <button class="btn btn-ghost btn-sm" onclick='showOrderReceipt(orders.find(x=>x.id=="${o.id}"))'>🧾</button>
-          <button class="btn btn-edit btn-sm" onclick="editOrder('${o.id}')">✏️</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteOrder('${o.id}')">🗑</button>
-        </div>
+        <div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:0.9rem;">${o.client} ${srcTag(o.source)}</div><div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">${o.desc.length>60?o.desc.slice(0,60)+'...':o.desc}</div><div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">📅 ${fmtDate(o.date)} ${o.arrival?'→ '+fmtDate(o.arrival):''}</div><div style="margin-top:4px;display:flex;align-items:center;gap:6px;">${sb(o.status)}<span style="font-size:0.75rem;color:var(--gold);font-weight:600;">${ugx(o.sell)}</span><span style="font-size:0.72rem;color:${o.sell-o.cost>=0?'var(--mint)':'var(--danger)'};">(+${ugx(o.sell-o.cost)})</span></div></div>
+        <div style="display:flex;gap:4px;flex-shrink:0;"><button class="btn btn-ghost btn-sm" onclick='showOrderReceipt(orders.find(x=>x.id=="${o.id}"))'>🧾</button><button class="btn btn-edit btn-sm" onclick="editOrder('${o.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteOrder('${o.id}')">🗑</button></div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 // ── CYCLES ──
 function calcCycle() {
-  const collected = Number(document.getElementById('c-collected').value||0);
-  const cost = Number(document.getElementById('c-cost').value||0);
-  const shipping = Number(document.getElementById('c-shipping').value||0);
-  const points = Number(document.getElementById('c-points').value||0);
-  const discount = Number(document.getElementById('c-discount').value||0);
-  const totalDeductions = points + discount;
-  const netCost = Math.max(0, cost + shipping - totalDeductions);
-  const gross = collected - netCost;
-  const ncEl = document.getElementById('c-netcost');
-  ncEl.value = ugx(netCost);
-  ncEl.style.color = 'var(--sky)';
-  const stEl = document.getElementById('c-savings-total');
-  stEl.value = ugx(totalDeductions) + ' saved';
-  stEl.style.color = 'var(--mint)';
-  const gEl = document.getElementById('c-gross');
-  gEl.value = gross>=0 ? ugx(gross) : ugx(Math.abs(gross))+' LOSS';
-  gEl.style.color = gross>=0?'var(--mint)':'var(--danger)';
-  if(gross>0) {
-    document.getElementById('c-tithe').value   = ugx(gross*0.10);
-    document.getElementById('c-savings').value = ugx(gross*0.30);
-    document.getElementById('c-reinvest').value= ugx(gross*0.20);
-    document.getElementById('c-salary').value  = ugx(gross*0.40);
-  } else {
-    ['c-tithe','c-savings','c-reinvest','c-salary'].forEach(i=>document.getElementById(i).value='UGX 0');
-  }
+  const collected=Number(document.getElementById('c-collected').value||0);const cost=Number(document.getElementById('c-cost').value||0);const shipping=Number(document.getElementById('c-shipping').value||0);const points=Number(document.getElementById('c-points').value||0);const discount=Number(document.getElementById('c-discount').value||0);const totalDeductions=points+discount;const netCost=Math.max(0,cost+shipping-totalDeductions);const gross=collected-netCost;
+  document.getElementById('c-netcost').value=ugx(netCost);document.getElementById('c-netcost').style.color='var(--sky)';document.getElementById('c-savings-total').value=ugx(totalDeductions)+' saved';document.getElementById('c-savings-total').style.color='var(--mint)';document.getElementById('c-gross').value=gross>=0?ugx(gross):ugx(Math.abs(gross))+' LOSS';document.getElementById('c-gross').style.color=gross>=0?'var(--mint)':'var(--danger)';
+  if(gross>0){document.getElementById('c-tithe').value=ugx(gross*0.10);document.getElementById('c-savings').value=ugx(gross*0.30);document.getElementById('c-reinvest').value=ugx(gross*0.20);document.getElementById('c-salary').value=ugx(gross*0.40);}
+  else{['c-tithe','c-savings','c-reinvest','c-salary'].forEach(i=>document.getElementById(i).value='UGX 0');}
 }
-
 function saveCycle() {
-  const name = document.getElementById('c-name').value.trim();
-  const collected = document.getElementById('c-collected').value;
-  const cost = document.getElementById('c-cost').value;
-  const date = document.getElementById('c-date').value;
-  const editingId = document.getElementById('c-editing-id').value;
-  if(!name||!collected||!cost||!date) { alert('Please fill all required (*) fields'); return; }
-  const shipping = Number(document.getElementById('c-shipping').value||0);
-  const gross = Number(collected) - Number(cost) - shipping;
-  const data = {
-    name, source:document.getElementById('c-source').value,
-    date, arrival:document.getElementById('c-arrival').value,
-    collected:Number(collected), cost:Number(cost), shipping, gross,
-    tithe:gross*0.10, savings:gross*0.30, reinvest:gross*0.20, salary:gross*0.40,
-    notes:document.getElementById('c-notes').value.trim(),
-  };
-  if(editingId) {
-    const idx=cycles.findIndex(c=>c.id===editingId);
-    if(idx!==-1) cycles[idx]={...cycles[idx],...data};
-  } else {
-    cycles.unshift({id:gid(),...data});
-  }
-  save(); clearCycleForm(); renderCycles(); renderDash();
+  const name=document.getElementById('c-name').value.trim();const collected=document.getElementById('c-collected').value;const cost=document.getElementById('c-cost').value;const date=document.getElementById('c-date').value;const editingId=document.getElementById('c-editing-id').value;
+  if(!name||!collected||!cost||!date){alert('Please fill all required (*) fields');return;}
+  const shipping=Number(document.getElementById('c-shipping').value||0);const gross=Number(collected)-Number(cost)-shipping;
+  const data={name,source:document.getElementById('c-source').value,date,arrival:document.getElementById('c-arrival').value,collected:Number(collected),cost:Number(cost),shipping,gross,tithe:gross*0.10,savings:gross*0.30,reinvest:gross*0.20,salary:gross*0.40,notes:document.getElementById('c-notes').value.trim()};
+  if(editingId){const idx=cycles.findIndex(c=>c.id===editingId);if(idx!==-1)cycles[idx]={...cycles[idx],...data};}else{cycles.unshift({id:gid(),...data});}
+  save();clearCycleForm();renderCycles();renderDash();
 }
-
 function editCycle(id) {
-  const c=cycles.find(x=>x.id===id); if(!c) return;
-  document.getElementById('c-name').value=c.name;
-  document.getElementById('c-source').value=c.source;
-  document.getElementById('c-date').value=c.date;
-  document.getElementById('c-arrival').value=c.arrival||'';
-  document.getElementById('c-collected').value=c.collected;
-  document.getElementById('c-cost').value=c.cost;
-  document.getElementById('c-shipping').value=c.shipping||0;
-  document.getElementById('c-points').value=c.points||0;
-  document.getElementById('c-discount').value=c.discount||0;
-  document.getElementById('c-notes').value=c.notes||'';
-  document.getElementById('c-editing-id').value=id;
-  document.getElementById('c-save-btn').textContent='💾 Update Cycle';
-  document.getElementById('c-cancel-btn').style.display='inline-flex';
-  calcCycle();
-  window.scrollTo({top:0,behavior:'smooth'});
+  const c=cycles.find(x=>x.id===id);if(!c)return;
+  document.getElementById('c-name').value=c.name;document.getElementById('c-source').value=c.source;document.getElementById('c-date').value=c.date;document.getElementById('c-arrival').value=c.arrival||'';document.getElementById('c-collected').value=c.collected;document.getElementById('c-cost').value=c.cost;document.getElementById('c-shipping').value=c.shipping||0;document.getElementById('c-points').value=c.points||0;document.getElementById('c-discount').value=c.discount||0;document.getElementById('c-notes').value=c.notes||'';document.getElementById('c-editing-id').value=id;document.getElementById('c-save-btn').textContent='💾 Update Cycle';document.getElementById('c-cancel-btn').style.display='inline-flex';calcCycle();window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function deleteCycle(id) {
-  if(!confirm('Delete this cycle?')) return;
-  cycles=cycles.filter(c=>c.id!==id);
-  save(); renderCycles(); renderDash();
-}
-
+function deleteCycle(id) {if(!confirm('Delete this cycle?'))return;cycles=cycles.filter(c=>c.id!==id);save();renderCycles();renderDash();}
 function clearCycleForm() {
   ['c-name','c-collected','c-cost','c-shipping','c-points','c-discount','c-netcost','c-savings-total','c-gross','c-tithe','c-savings','c-reinvest','c-salary','c-arrival','c-notes','c-editing-id'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('c-source').value='shein';
-  document.getElementById('c-date').value=new Date().toISOString().split('T')[0];
-  document.getElementById('c-save-btn').textContent='💾 Save Cycle';
-  document.getElementById('c-cancel-btn').style.display='none';
+  document.getElementById('c-source').value='shein';document.getElementById('c-date').value=new Date().toISOString().split('T')[0];document.getElementById('c-save-btn').textContent='💾 Save Cycle';document.getElementById('c-cancel-btn').style.display='none';
 }
-
 function renderCycles() {
   const el=document.getElementById('cycles-list');
   if(!cycles.length){el.innerHTML='<div class="empty"><div class="ei">🔄</div><p>No cycles yet.</p></div>';return;}
   el.innerHTML=cycles.map(c=>`
     <div style="padding:12px 0;border-bottom:1px solid var(--border);">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
-        <div style="flex:1;">
-          <div style="font-weight:600;font-size:0.9rem;">${c.name} ${srcTag(c.source)}</div>
-          <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">📅 ${fmtDate(c.date)}</div>
-          <div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:0.75rem;">
-            <span>Collected: <strong style="color:var(--gold)">${ugx(c.collected)}</strong></span>
-            <span>Cost: <strong style="color:var(--danger)">${ugx(c.cost)}</strong></span>
-            <span>Profit: <strong style="color:${c.gross>=0?'var(--mint)':'var(--danger)'}">${ugx(c.gross)}</strong></span>
-            <span>Salary: <strong style="color:var(--rose)">${ugx(c.salary)}</strong></span>
-          </div>
-          <div class="profit-bar"><div class="profit-fill" style="width:${Math.min(100,Math.max(0,(c.gross/c.collected)*100))}%"></div></div>
-        </div>
-        <div style="display:flex;gap:4px;flex-shrink:0;">
-          <button class="btn btn-edit btn-sm" onclick="editCycle('${c.id}')">✏️</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteCycle('${c.id}')">🗑</button>
-        </div>
+        <div style="flex:1;"><div style="font-weight:600;font-size:0.9rem;">${c.name} ${srcTag(c.source)}</div><div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">📅 ${fmtDate(c.date)}</div><div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:0.75rem;"><span>Collected: <strong style="color:var(--gold)">${ugx(c.collected)}</strong></span><span>Cost: <strong style="color:var(--danger)">${ugx(c.cost)}</strong></span><span>Profit: <strong style="color:${c.gross>=0?'var(--mint)':'var(--danger)'}">${ugx(c.gross)}</strong></span><span>Salary: <strong style="color:var(--rose)">${ugx(c.salary)}</strong></span></div><div class="profit-bar"><div class="profit-fill" style="width:${Math.min(100,Math.max(0,(c.gross/c.collected)*100))}%"></div></div></div>
+        <div style="display:flex;gap:4px;flex-shrink:0;"><button class="btn btn-edit btn-sm" onclick="editCycle('${c.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteCycle('${c.id}')">🗑</button></div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 // ── CLIENTS ──
 function saveClient() {
-  const name=document.getElementById('cl-name').value.trim();
-  const phone=document.getElementById('cl-phone').value.trim();
-  const editingId=document.getElementById('cl-editing-id').value;
+  const name=document.getElementById('cl-name').value.trim();const phone=document.getElementById('cl-phone').value.trim();const editingId=document.getElementById('cl-editing-id').value;
   if(!name||!phone){alert('Name and phone are required');return;}
-  const data={
-    name,phone,
-    type:document.getElementById('cl-type').value,
-    location:document.getElementById('cl-location').value.trim(),
-    ig:document.getElementById('cl-ig').value.trim(),
-    spent:Number(document.getElementById('cl-spent').value||0),
-    notes:document.getElementById('cl-notes').value.trim(),
-  };
-  if(editingId){
-    const idx=clients.findIndex(c=>c.id===editingId);
-    if(idx!==-1)clients[idx]={...clients[idx],...data};
-  } else {
-    clients.unshift({id:gid(),createdAt:new Date().toISOString().split('T')[0],...data});
-  }
+  const data={name,phone,type:document.getElementById('cl-type').value,location:document.getElementById('cl-location').value.trim(),ig:document.getElementById('cl-ig').value.trim(),spent:Number(document.getElementById('cl-spent').value||0),notes:document.getElementById('cl-notes').value.trim()};
+  if(editingId){const idx=clients.findIndex(c=>c.id===editingId);if(idx!==-1)clients[idx]={...clients[idx],...data};}else{clients.unshift({id:gid(),createdAt:new Date().toISOString().split('T')[0],...data});}
   save();clearClientForm();renderClients();renderDash();
 }
-
 function editClient(id) {
   const c=clients.find(x=>x.id===id);if(!c)return;
-  document.getElementById('cl-name').value=c.name;
-  document.getElementById('cl-phone').value=c.phone;
-  document.getElementById('cl-type').value=c.type;
-  document.getElementById('cl-location').value=c.location||'';
-  document.getElementById('cl-ig').value=c.ig||'';
-  document.getElementById('cl-spent').value=c.spent||0;
-  document.getElementById('cl-notes').value=c.notes||'';
-  document.getElementById('cl-editing-id').value=id;
-  document.getElementById('cl-save-btn').textContent='💾 Update Client';
-  document.getElementById('cl-cancel-btn').style.display='inline-flex';
-  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('cl-name').value=c.name;document.getElementById('cl-phone').value=c.phone;document.getElementById('cl-type').value=c.type;document.getElementById('cl-location').value=c.location||'';document.getElementById('cl-ig').value=c.ig||'';document.getElementById('cl-spent').value=c.spent||0;document.getElementById('cl-notes').value=c.notes||'';document.getElementById('cl-editing-id').value=id;document.getElementById('cl-save-btn').textContent='💾 Update Client';document.getElementById('cl-cancel-btn').style.display='inline-flex';window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function deleteClient(id) {
-  if(!confirm('Delete this client?'))return;
-  clients=clients.filter(c=>c.id!==id);
-  save();renderClients();renderDash();
-}
-
+function deleteClient(id) {if(!confirm('Delete this client?'))return;clients=clients.filter(c=>c.id!==id);save();renderClients();renderDash();}
 function clearClientForm() {
   ['cl-name','cl-phone','cl-location','cl-ig','cl-spent','cl-notes','cl-editing-id'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('cl-type').value='fashion';
-  document.getElementById('cl-save-btn').textContent='💾 Save Client';
-  document.getElementById('cl-cancel-btn').style.display='none';
+  document.getElementById('cl-type').value='fashion';document.getElementById('cl-save-btn').textContent='💾 Save Client';document.getElementById('cl-cancel-btn').style.display='none';
 }
-
 function renderClients() {
-  const filter=document.getElementById('cl-filter').value;
-  const list=filter?clients.filter(c=>c.type===filter):clients;
-  const el=document.getElementById('clients-list');
+  const filter=document.getElementById('cl-filter').value;const list=filter?clients.filter(c=>c.type===filter):clients;const el=document.getElementById('clients-list');
   if(!list.length){el.innerHTML='<div class="empty"><div class="ei">👥</div><p>No clients yet.</p></div>';return;}
   el.innerHTML=list.map(c=>`
     <div style="padding:12px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px;">
-      <div style="flex:1;">
-        <div style="font-weight:600;font-size:0.9rem;">${c.name}</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">📞 ${c.phone}${c.location?' · '+c.location:''}${c.ig?' · '+c.ig:''}</div>
-        <div style="font-size:0.75rem;margin-top:2px;">
-          <span class="sb ${c.type==='fashion'?'sb-rose':c.type==='it'?'sb-blue':c.type==='digital'?'sb-yellow':'sb-green'}">${c.type}</span>
-          ${c.spent>0?`<span style="color:var(--gold);font-size:0.75rem;margin-left:6px;">${ugx(c.spent)} spent</span>`:''}
-        </div>
-        ${c.notes?`<div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${c.notes}</div>`:''}
-      </div>
-      <div style="display:flex;gap:4px;flex-shrink:0;">
-        <button class="btn btn-ghost btn-sm" onclick="window.open('https://wa.me/${c.phone.replace(/\D/g,'')}','_blank')">📲</button>
-        <button class="btn btn-edit btn-sm" onclick="editClient('${c.id}')">✏️</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteClient('${c.id}')">🗑</button>
-      </div>
-    </div>
-  `).join('');
+      <div style="flex:1;"><div style="font-weight:600;font-size:0.9rem;">${c.name}</div><div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">📞 ${c.phone}${c.location?' · '+c.location:''}${c.ig?' · '+c.ig:''}</div><div style="font-size:0.75rem;margin-top:2px;"><span class="sb ${c.type==='fashion'?'sb-rose':c.type==='it'?'sb-blue':c.type==='digital'?'sb-yellow':'sb-green'}">${c.type}</span>${c.spent>0?`<span style="color:var(--gold);font-size:0.75rem;margin-left:6px;">${ugx(c.spent)} spent</span>`:''}</div>${c.notes?`<div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${c.notes}</div>`:''}</div>
+      <div style="display:flex;gap:4px;flex-shrink:0;"><button class="btn btn-ghost btn-sm" onclick="window.open('https://wa.me/${c.phone.replace(/\D/g,'')}','_blank')">📲</button><button class="btn btn-edit btn-sm" onclick="editClient('${c.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteClient('${c.id}')">🗑</button></div>
+    </div>`).join('');
 }
 
 // ── GIGS ──
 function saveGig() {
-  const client=document.getElementById('g-client').value.trim();
-  const desc=document.getElementById('g-desc').value.trim();
-  const amount=document.getElementById('g-amount').value;
-  const editingId=document.getElementById('g-editing-id').value;
+  const client=document.getElementById('g-client').value.trim();const desc=document.getElementById('g-desc').value.trim();const amount=document.getElementById('g-amount').value;const editingId=document.getElementById('g-editing-id').value;
   if(!client||!desc||!amount){alert('Please fill all required (*) fields');return;}
-  const data={
-    client,
-    category:document.getElementById('g-category').value,
-    desc,
-    start:document.getElementById('g-start').value,
-    end:document.getElementById('g-end').value,
-    amount:Number(amount),
-    paid:Number(document.getElementById('g-paid').value||0),
-    platform:document.getElementById('g-platform').value,
-    status:document.getElementById('g-status').value,
-    notes:document.getElementById('g-notes').value.trim(),
-  };
-  if(editingId){
-    const idx=gigs.findIndex(g=>g.id===editingId);
-    if(idx!==-1)gigs[idx]={...gigs[idx],...data};
-  } else {
-    gigs.unshift({id:gid(),...data});
-  }
+  const data={client,category:document.getElementById('g-category').value,desc,start:document.getElementById('g-start').value,end:document.getElementById('g-end').value,amount:Number(amount),paid:Number(document.getElementById('g-paid').value||0),platform:document.getElementById('g-platform').value,status:document.getElementById('g-status').value,notes:document.getElementById('g-notes').value.trim()};
+  if(editingId){const idx=gigs.findIndex(g=>g.id===editingId);if(idx!==-1)gigs[idx]={...gigs[idx],...data};}else{gigs.unshift({id:gid(),...data});}
   save();clearGigForm();renderGigs();renderDash();
 }
-
 function editGig(id) {
   const g=gigs.find(x=>x.id===id);if(!g)return;
-  document.getElementById('g-client').value=g.client;
-  document.getElementById('g-category').value=g.category;
-  document.getElementById('g-desc').value=g.desc;
-  document.getElementById('g-start').value=g.start||'';
-  document.getElementById('g-end').value=g.end||'';
-  document.getElementById('g-amount').value=g.amount;
-  document.getElementById('g-paid').value=g.paid||0;
-  document.getElementById('g-platform').value=g.platform;
-  document.getElementById('g-status').value=g.status;
-  document.getElementById('g-notes').value=g.notes||'';
-  document.getElementById('g-editing-id').value=id;
-  document.getElementById('g-save-btn').textContent='💾 Update Gig';
-  document.getElementById('g-cancel-btn').style.display='inline-flex';
-  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('g-client').value=g.client;document.getElementById('g-category').value=g.category;document.getElementById('g-desc').value=g.desc;document.getElementById('g-start').value=g.start||'';document.getElementById('g-end').value=g.end||'';document.getElementById('g-amount').value=g.amount;document.getElementById('g-paid').value=g.paid||0;document.getElementById('g-platform').value=g.platform;document.getElementById('g-status').value=g.status;document.getElementById('g-notes').value=g.notes||'';document.getElementById('g-editing-id').value=id;document.getElementById('g-save-btn').textContent='💾 Update Gig';document.getElementById('g-cancel-btn').style.display='inline-flex';window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function deleteGig(id) {
-  if(!confirm('Delete this gig?'))return;
-  gigs=gigs.filter(g=>g.id!==id);
-  save();renderGigs();renderDash();
-}
-
+function deleteGig(id) {if(!confirm('Delete this gig?'))return;gigs=gigs.filter(g=>g.id!==id);save();renderGigs();renderDash();}
 function clearGigForm() {
   ['g-client','g-desc','g-start','g-end','g-amount','g-paid','g-notes','g-editing-id'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('g-category').value='cybersecurity';
-  document.getElementById('g-platform').value='upwork';
-  document.getElementById('g-status').value='prospect';
-  document.getElementById('g-save-btn').textContent='💾 Save Gig';
-  document.getElementById('g-cancel-btn').style.display='none';
+  document.getElementById('g-category').value='cybersecurity';document.getElementById('g-platform').value='upwork';document.getElementById('g-status').value='prospect';document.getElementById('g-save-btn').textContent='💾 Save Gig';document.getElementById('g-cancel-btn').style.display='none';
 }
-
 function renderGigs() {
   const el=document.getElementById('gigs-list');
   if(!gigs.length){el.innerHTML='<div class="empty"><div class="ei">💼</div><p>No gigs yet.</p></div>';return;}
   el.innerHTML=gigs.map(g=>`
     <div style="padding:12px 0;border-bottom:1px solid var(--border);">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
-        <div style="flex:1;">
-          <div style="font-weight:600;font-size:0.9rem;">${g.client}</div>
-          <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">${g.category} · ${g.platform}</div>
-          <div style="font-size:0.75rem;color:var(--muted);margin-top:1px;">${g.desc.length>60?g.desc.slice(0,60)+'...':g.desc}</div>
-          <div style="margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-            ${sb(g.status)}
-            <span style="color:var(--gold);font-size:0.78rem;font-weight:600;">${ugx(g.amount)}</span>
-            ${g.paid>0?`<span style="color:var(--mint);font-size:0.72rem;">Paid: ${ugx(g.paid)}</span>`:''}
-          </div>
-        </div>
-        <div style="display:flex;gap:4px;flex-shrink:0;">
-          <button class="btn btn-edit btn-sm" onclick="editGig('${g.id}')">✏️</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteGig('${g.id}')">🗑</button>
-        </div>
+        <div style="flex:1;"><div style="font-weight:600;font-size:0.9rem;">${g.client}</div><div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">${g.category} · ${g.platform}</div><div style="font-size:0.75rem;color:var(--muted);margin-top:1px;">${g.desc.length>60?g.desc.slice(0,60)+'...':g.desc}</div><div style="margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">${sb(g.status)}<span style="color:var(--gold);font-size:0.78rem;font-weight:600;">${ugx(g.amount)}</span>${g.paid>0?`<span style="color:var(--mint);font-size:0.72rem;">Paid: ${ugx(g.paid)}</span>`:''}</div></div>
+        <div style="display:flex;gap:4px;flex-shrink:0;"><button class="btn btn-edit btn-sm" onclick="editGig('${g.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteGig('${g.id}')">🗑</button></div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 // ── EXPENSES ──
 function saveExpense() {
-  const desc=document.getElementById('e-desc').value.trim();
-  const amount=document.getElementById('e-amount').value;
-  const date=document.getElementById('e-date').value;
-  const editingId=document.getElementById('e-editing-id').value;
+  const desc=document.getElementById('e-desc').value.trim();const amount=document.getElementById('e-amount').value;const date=document.getElementById('e-date').value;const editingId=document.getElementById('e-editing-id').value;
   if(!desc||!amount||!date){alert('Please fill all required (*) fields');return;}
-  const data={
-    desc,amount:Number(amount),date,
-    cat:document.getElementById('e-cat').value,
-    stream:document.getElementById('e-stream').value,
-    notes:document.getElementById('e-notes').value.trim(),
-  };
-  if(editingId){
-    const idx=expenses.findIndex(e=>e.id===editingId);
-    if(idx!==-1)expenses[idx]={...expenses[idx],...data};
-  } else {
-    expenses.unshift({id:gid(),...data});
-  }
+  const data={desc,amount:Number(amount),date,cat:document.getElementById('e-cat').value,stream:document.getElementById('e-stream').value,notes:document.getElementById('e-notes').value.trim()};
+  if(editingId){const idx=expenses.findIndex(e=>e.id===editingId);if(idx!==-1)expenses[idx]={...expenses[idx],...data};}else{expenses.unshift({id:gid(),...data});}
   save();clearExpenseForm();renderExpenses();renderDash();
 }
-
 function editExpense(id) {
   const e=expenses.find(x=>x.id===id);if(!e)return;
-  document.getElementById('e-desc').value=e.desc;
-  document.getElementById('e-amount').value=e.amount;
-  document.getElementById('e-date').value=e.date;
-  document.getElementById('e-cat').value=e.cat;
-  document.getElementById('e-stream').value=e.stream;
-  document.getElementById('e-notes').value=e.notes||'';
-  document.getElementById('e-editing-id').value=id;
-  document.getElementById('e-save-btn').textContent='💾 Update Expense';
-  document.getElementById('e-cancel-btn').style.display='inline-flex';
-  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('e-desc').value=e.desc;document.getElementById('e-amount').value=e.amount;document.getElementById('e-date').value=e.date;document.getElementById('e-cat').value=e.cat;document.getElementById('e-stream').value=e.stream;document.getElementById('e-notes').value=e.notes||'';document.getElementById('e-editing-id').value=id;document.getElementById('e-save-btn').textContent='💾 Update Expense';document.getElementById('e-cancel-btn').style.display='inline-flex';window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function deleteExpense(id) {
-  if(!confirm('Delete this expense?'))return;
-  expenses=expenses.filter(e=>e.id!==id);
-  save();renderExpenses();renderDash();
-}
-
+function deleteExpense(id) {if(!confirm('Delete this expense?'))return;expenses=expenses.filter(e=>e.id!==id);save();renderExpenses();renderDash();}
 function clearExpenseForm() {
   ['e-desc','e-amount','e-notes','e-editing-id'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('e-cat').value='shipping';
-  document.getElementById('e-stream').value='sorah';
-  document.getElementById('e-date').value=new Date().toISOString().split('T')[0];
-  document.getElementById('e-save-btn').textContent='💾 Save Expense';
-  document.getElementById('e-cancel-btn').style.display='none';
+  document.getElementById('e-cat').value='shipping';document.getElementById('e-stream').value='sorah';document.getElementById('e-date').value=new Date().toISOString().split('T')[0];document.getElementById('e-save-btn').textContent='💾 Save Expense';document.getElementById('e-cancel-btn').style.display='none';
 }
-
 function renderExpenses() {
   const el=document.getElementById('expenses-list');
   if(!expenses.length){el.innerHTML='<div class="empty"><div class="ei">💸</div><p>No expenses yet.</p></div>';return;}
@@ -1125,31 +848,207 @@ function renderExpenses() {
   el.innerHTML=`<div style="padding:8px 0;margin-bottom:8px;border-bottom:1px solid var(--border);font-size:0.82rem;color:var(--muted);">Total: <strong style="color:var(--danger);">${ugx(total)}</strong></div>`+
   expenses.map(e=>`
     <div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px;">
-      <div style="flex:1;">
-        <div style="font-weight:600;font-size:0.88rem;">${e.desc}</div>
-        <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${e.cat} · ${e.stream} · ${fmtDate(e.date)}</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
-        <span style="color:var(--danger);font-weight:600;font-size:0.85rem;">${ugx(e.amount)}</span>
-        <button class="btn btn-edit btn-sm" onclick="editExpense('${e.id}')">✏️</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteExpense('${e.id}')">🗑</button>
-      </div>
-    </div>
-  `).join('');
+      <div style="flex:1;"><div style="font-weight:600;font-size:0.88rem;">${e.desc}</div><div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${e.cat} · ${e.stream} · ${fmtDate(e.date)}</div></div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><span style="color:var(--danger);font-weight:600;font-size:0.85rem;">${ugx(e.amount)}</span><button class="btn btn-edit btn-sm" onclick="editExpense('${e.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteExpense('${e.id}')">🗑</button></div>
+    </div>`).join('');
 }
 
-
-// ── THEME TOGGLE ──
+// ── THEME ──
 function toggleTheme() {
   document.body.classList.toggle('light');
-  const isLight = document.body.classList.contains('light');
-  document.getElementById('theme-btn').textContent = isLight ? '🌙' : '☀️';
-  localStorage.setItem('shq_theme', isLight ? 'light' : 'dark');
+  const isLight=document.body.classList.contains('light');
+  document.getElementById('theme-btn').textContent=isLight?'🌙':'☀️';
+  localStorage.setItem('shq_theme',isLight?'light':'dark');
 }
 
+// ── CURRENCY ──
+const rates={UGX:1,USD:3750,AED:1021,GBP:4750,CNY:517,EUR:4050,KES:29};
+function convertCurrency(){
+  const ugxAmt=Number(document.getElementById('cv-ugx').value||0);
+  if(!ugxAmt){document.getElementById('cv-results').innerHTML='';return;}
+  const out=Object.entries(rates).filter(([k])=>k!=='UGX').map(([k,r])=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:0.85rem;"><span style="color:var(--muted);">${k}</span><strong style="color:var(--gold);">${(ugxAmt/r).toFixed(2)}</strong></div>`).join('');
+  document.getElementById('cv-results').innerHTML=out;
+}
+function convertCustom(){
+  const amt=Number(document.getElementById('cv-amount').value||0);const from=document.getElementById('cv-from').value;const to=document.getElementById('cv-to').value;
+  if(!amt){document.getElementById('cv-custom-result').textContent='Enter amount above';return;}
+  const result=(amt*rates[from])/rates[to];
+  document.getElementById('cv-custom-result').textContent=`${amt.toLocaleString()} ${from} = ${result.toFixed(2)} ${to}`;
+}
 
+// ══════════════════════════════════════
+// ── SCORECARD ──
+// ══════════════════════════════════════
+let scWeek = 1;
+const SC_TOTAL_WEEKS = 4;
+let scStream = 'sorah';
 
-// ── ORDER RECEIPT ──
+const scMetrics = {
+  sorah: {
+    tip: '<strong>Key diagnostic:</strong> Divide orders by DMs to get your conversion rate. Under 20% means the sales conversation needs work. Under 5% means content is not attracting the right buyers.',
+    items: [
+      { id: 'sorah_revenue', name: 'Revenue collected (UGX)', desc: 'Total payments received from preorders', def: 150000, auto: false },
+      { id: 'sorah_orders',  name: 'New preorders confirmed', desc: 'Confirmed orders with deposit paid', def: 5, auto: true, autoFn: () => orders.filter(o => {
+          const w = scWeek; const now = new Date(); const wStart = new Date(now); wStart.setDate(now.getDate() - now.getDay() - (SC_TOTAL_WEEKS - w) * 7); const wEnd = new Date(wStart); wEnd.setDate(wStart.getDate()+7);
+          const d = new Date(o.date+'T00:00:00'); return d >= wStart && d < wEnd && o.deposit > 0;
+        }).length },
+      { id: 'sorah_dms',     name: 'DMs / inquiries received', desc: 'People who messaged about products', def: 20, auto: false },
+      { id: 'sorah_posts',   name: 'Posts published', desc: 'Instagram posts, reels or stories', def: 5, auto: false },
+      { id: 'sorah_followers', name: 'New followers gained', desc: 'Net new Instagram followers this week', def: 30, auto: false },
+    ]
+  },
+  it: {
+    tip: '<strong>Key diagnostic:</strong> If proposals ÷ responses is under 20%, rewrite your proposal opening line. If responses ÷ paid gigs is low, your pricing or portfolio needs attention.',
+    items: [
+      { id: 'it_proposals', name: 'Proposals sent', desc: 'Upwork or direct pitches submitted', def: 4, auto: false },
+      { id: 'it_responses', name: 'Positive responses', desc: 'Replies, interviews or calls booked', def: 1, auto: false },
+      { id: 'it_revenue',   name: 'Revenue earned (UGX)', desc: 'Paid consulting or gig income', def: 200000, auto: true, autoFn: () => gigs.filter(g => g.status === 'paid' && g.category !== 'digital-product').reduce((s,g)=>s+Number(g.paid||0),0) },
+      { id: 'it_pipeline',  name: 'Active leads in pipeline', desc: 'Open conversations that could convert', def: 3, auto: true, autoFn: () => gigs.filter(g => ['prospect','active'].includes(g.status)).length },
+    ]
+  },
+  digital: {
+    tip: '<strong>Key diagnostic:</strong> Visits with no sales = product page or pricing issue. Low visits = promotion issue. Run one fix at a time so you know what actually worked.',
+    items: [
+      { id: 'dp_sales',   name: 'Units sold', desc: 'Digital products sold across all platforms', def: 3, auto: true, autoFn: () => gigs.filter(g => g.category==='digital-product' && g.status==='paid').length },
+      { id: 'dp_revenue', name: 'Revenue (UGX)', desc: 'Income from digital product sales', def: 50000, auto: true, autoFn: () => gigs.filter(g=>g.category==='digital-product'&&g.status==='paid').reduce((s,g)=>s+Number(g.paid||0),0) },
+      { id: 'dp_promo',   name: 'Promotional posts', desc: 'Times you shared a product online', def: 4, auto: false },
+      { id: 'dp_visits',  name: 'Platform clicks / visits', desc: 'Traffic to Selar, Gumroad or Payhip', def: 50, auto: false },
+    ]
+  }
+};
+
+function scKey(id) { return id + '_w' + scWeek; }
+function scGetTarget(id) { return scData[id + '_target'] !== undefined ? scData[id + '_target'] : scMetrics[scStream]?.items.find(m=>m.id===id)?.def || 0; }
+function scGetActual(id) { return scData[scKey(id)] !== undefined ? scData[scKey(id)] : ''; }
+function scSetTarget(id, val) { scData[id + '_target'] = Number(val); save(); }
+function scSetActual(id, val) { scData[scKey(id)] = Number(val); save(); }
+
+function scBadge(actual, target) {
+  if(actual===''||!target) return '<span class="sc-badge sc-badge-none">Enter data</span>';
+  const pct = (Number(actual)/Number(target))*100;
+  if(pct>=100) return `<span class="sc-badge sc-badge-hit">✓ ${Math.round(pct)}% — hit</span>`;
+  if(pct>=60)  return `<span class="sc-badge sc-badge-close">${Math.round(pct)}% — close</span>`;
+  return `<span class="sc-badge sc-badge-miss">${Math.round(pct)}% — behind</span>`;
+}
+
+function scBarColor(actual, target) {
+  if(actual===''||!target) return 'var(--border)';
+  const pct=(Number(actual)/Number(target))*100;
+  if(pct>=100) return 'var(--mint)';
+  if(pct>=60)  return 'var(--gold)';
+  return 'var(--danger)';
+}
+
+function renderScorecard() {
+  document.getElementById('sc-week-label').textContent = `Week ${scWeek} of ${SC_TOTAL_WEEKS}`;
+  ['sorah','it','digital','summary'].forEach(s => {
+    document.getElementById('sc-tab-'+s).classList.toggle('active', s===scStream);
+  });
+  if(scStream==='summary') { renderScSummary(); return; }
+
+  const stream = scMetrics[scStream];
+  let html = '';
+
+  stream.items.forEach(m => {
+    const target = scGetTarget(m.id);
+    let actual = scGetActual(m.id);
+    let autoVal = '';
+    if(m.auto && m.autoFn) {
+      try { autoVal = m.autoFn(); } catch(e) { autoVal = ''; }
+    }
+    const displayActual = actual !== '' ? actual : (m.auto ? autoVal : '');
+    const barPct = (target && displayActual !== '') ? Math.min(100, Math.round((Number(displayActual)/Number(target))*100)) : 0;
+
+    html += `<div class="sc-metric">
+      <div class="sc-metric-name">${m.name}${m.auto ? '<span class="sc-auto">· auto-reads your data</span>' : ''}</div>
+      <div class="sc-metric-desc">${m.desc}</div>
+      <div class="sc-inputs">
+        <div class="sc-input-wrap">
+          <label>Weekly target</label>
+          <input type="number" value="${target}" onchange="scSetTarget('${m.id}',this.value);renderScorecard();" />
+        </div>
+        <div class="sc-input-wrap">
+          <label>Actual ${m.auto && autoVal !== '' ? '(auto: '+autoVal+')' : ''}</label>
+          <input type="number" placeholder="${m.auto && autoVal !== '' ? autoVal : '0'}" value="${actual}" onchange="scSetActual('${m.id}',this.value);renderScorecard();" />
+        </div>
+      </div>
+      <div class="sc-bar-wrap"><div style="height:5px;border-radius:3px;width:${barPct}%;background:${scBarColor(displayActual,target)};transition:width 0.4s;"></div></div>
+      <div style="margin-top:6px;">${scBadge(displayActual, target)}</div>
+    </div>`;
+  });
+
+  html += `<div class="sc-tip">${stream.tip}</div>`;
+  document.getElementById('sc-content').innerHTML = html;
+}
+
+function renderScSummary() {
+  // Pull revenue from all weeks
+  const streams = [
+    { key: 'sorah_revenue', label: 'Sorah', color: 'var(--rose)' },
+    { key: 'it_revenue',    label: 'IT',    color: 'var(--sky)' },
+    { key: 'dp_revenue',    label: 'Digital', color: 'var(--gold)' },
+  ];
+
+  let totalAll = 0;
+  let summaryCards = streams.map(s => {
+    let wkTotal = 0;
+    for(let w=1;w<=SC_TOTAL_WEEKS;w++) {
+      wkTotal += Number(scData[s.key+'_w'+w] || 0);
+    }
+    totalAll += wkTotal;
+    return `<div class="sc-sum-card"><div class="sc-sum-label">${s.label}</div><div class="sc-sum-val" style="color:${s.color}">${wkTotal>0?wkTotal.toLocaleString():'—'}</div><div style="font-size:0.62rem;color:var(--muted);margin-top:2px;">UGX · 4 wks</div></div>`;
+  }).join('');
+
+  // Weekly breakdown
+  let weekRows = '';
+  for(let w=1;w<=SC_TOTAL_WEEKS;w++) {
+    const sorahR = Number(scData['sorah_revenue_w'+w]||0);
+    const itR    = Number(scData['it_revenue_w'+w]||0);
+    const dpR    = Number(scData['dp_revenue_w'+w]||0);
+    const wTotal = sorahR+itR+dpR;
+    const sorahO = scData['sorah_orders_w'+w] !== undefined ? scData['sorah_orders_w'+w] : '—';
+    const itP    = scData['it_proposals_w'+w] !== undefined ? scData['it_proposals_w'+w] : '—';
+    const dpS    = scData['dp_sales_w'+w] !== undefined ? scData['dp_sales_w'+w] : '—';
+    weekRows += `<div style="padding:10px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:0.82rem;font-weight:600;">Week ${w}</span>
+        <span style="color:var(--gold);font-size:0.82rem;font-weight:600;">${wTotal>0?ugx(wTotal):'—'}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:0.72rem;color:var(--muted);">
+        <span>Orders: <strong style="color:var(--rose);">${sorahO}</strong></span>
+        <span>Proposals: <strong style="color:var(--sky);">${itP}</strong></span>
+        <span>Sales: <strong style="color:var(--gold);">${dpS}</strong></span>
+      </div>
+    </div>`;
+  }
+
+  const zambiaFund = Math.round(totalAll * 0.10);
+  const zambiaMsg = zambiaFund > 0
+    ? `At your 30% savings split, <strong style="color:var(--gold);">${ugx(Math.round(totalAll*0.30))}</strong> goes to savings. Your 10% Zambia road trip fund contribution this month: <strong style="color:var(--gold);">${ugx(zambiaFund)}</strong>.`
+    : 'Start logging weekly revenue across all three streams to see your Zambia road trip fund grow here.';
+
+  document.getElementById('sc-content').innerHTML = `
+    <div class="sc-summary-grid">${summaryCards}<div class="sc-sum-card"><div class="sc-sum-label">Total</div><div class="sc-sum-val c-mint">${totalAll>0?totalAll.toLocaleString():'—'}</div><div style="font-size:0.62rem;color:var(--muted);margin-top:2px;">UGX · all streams</div></div></div>
+    <div style="font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Weekly breakdown</div>
+    ${weekRows}
+    <div class="sc-zambia">
+      <div class="sc-zambia-label">🚗 Zambia Road Trip Fund</div>
+      <div class="sc-zambia-val">${zambiaFund>0?ugx(zambiaFund):'UGX 0'}</div>
+      <div class="sc-zambia-sub">${zambiaMsg}</div>
+    </div>`;
+}
+
+function scChangeWeek(dir) {
+  scWeek = Math.max(1, Math.min(SC_TOTAL_WEEKS, scWeek + dir));
+  renderScorecard();
+}
+
+function scSetStream(s) {
+  scStream = s;
+  renderScorecard();
+}
+
+// ── RECEIPT ──
 let currentOrderReceipt = null;
 function showOrderReceipt(o) {
   if(!o) return;
@@ -1170,10 +1069,7 @@ function showOrderReceipt(o) {
         <div><span style="display:block;font-size:0.65rem;color:var(--muted);text-transform:uppercase;">Est. Arrival</span><strong>${o.arrival?fmtDate(o.arrival):'TBC'}</strong></div>
         <div><span style="display:block;font-size:0.65rem;color:var(--muted);text-transform:uppercase;">Status</span><strong>${o.status.toUpperCase()}</strong></div>
       </div>
-      <div style="background:var(--surface2);border-radius:10px;padding:12px;margin-bottom:14px;font-size:0.82rem;">
-        <div style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Items Ordered</div>
-        ${o.desc}
-      </div>
+      <div style="background:var(--surface2);border-radius:10px;padding:12px;margin-bottom:14px;font-size:0.82rem;"><div style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Items Ordered</div>${o.desc}</div>
       <div style="border-top:1px dashed var(--border);padding-top:12px;">
         <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.85rem;"><span>Total Price</span><span style="font-weight:700;">${ugx(o.sell)}</span></div>
         <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.85rem;color:var(--mint);"><span>✓ Deposit Paid</span><span style="font-weight:700;">${ugx(o.deposit||0)}</span></div>
@@ -1185,46 +1081,44 @@ function showOrderReceipt(o) {
         <p>📞 0705284663 · @sorah_ug · Kampala, Uganda</p>
         <p style="margin-top:4px;">Generated ${new Date().toLocaleString()}</p>
       </div>
-    </div>
-  `;
+    </div>`;
   document.getElementById('order-receipt-modal').classList.add('open');
 }
 function closeOrderReceipt() { document.getElementById('order-receipt-modal').classList.remove('open'); }
 function downloadOrderReceipt() {
-  const el = document.getElementById('order-receipt-content');
-  html2pdf().from(el).set({
-    margin:[8,8,8,8],
-    filename:`Sorah_Order_${currentOrderReceipt.client.replace(/\s+/g,'_')}.pdf`,
-    image:{type:'jpeg',quality:0.98},
-    html2canvas:{scale:2},
-    jsPDF:{unit:'mm',format:'a5',orientation:'portrait'},
-    pagebreak:{mode:'avoid-all'}
-  }).save();
+  const el=document.getElementById('order-receipt-content');
+  html2pdf().from(el).set({margin:[8,8,8,8],filename:`Sorah_Order_${currentOrderReceipt.client.replace(/\s+/g,'_')}.pdf`,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a5',orientation:'portrait'},pagebreak:{mode:'avoid-all'}}).save();
 }
 function shareOrderWhatsApp() {
-  const o = currentOrderReceipt;
-  const balance = o.sell - (o.deposit||0);
-  const msg =
-    `🌸 *SORAH — ORDER RECEIPT*\n`+
-    `━━━━━━━━━━━━━━━━\n`+
-    `👤 *${o.client}*\n`+
-    `📅 Order Date: ${fmtDate(o.date)}\n`+
-    `🛍️ Source: ${sourceLabels[o.source]||o.source}\n`+
-    `📦 Est. Arrival: ${o.arrival?fmtDate(o.arrival):'TBC'}\n`+
-    `━━━━━━━━━━━━━━━━\n`+
-    `*Items:*\n${o.desc}\n`+
-    `━━━━━━━━━━━━━━━━\n`+
-    `💰 Total: *${ugx(o.sell)}*\n`+
-    `✅ Deposit Paid: ${ugx(o.deposit||0)}\n`+
-    `${balance>0?`⚠ Balance Due: *${ugx(balance)}*`:`✅ *FULLY PAID*`}\n`+
-    `━━━━━━━━━━━━━━━━\n`+
-    `Thank you for shopping with Sorah! 🌸\n`+
-    `📞 0705284663 · @sorah_ug`;
-  const phone = (o.phone||'').replace(/\D/g,'');
+  const o=currentOrderReceipt;const balance=o.sell-(o.deposit||0);
+  const msg=`🌸 *SORAH — ORDER RECEIPT*\n━━━━━━━━━━━━━━━━\n👤 *${o.client}*\n📅 Order Date: ${fmtDate(o.date)}\n🛍️ Source: ${sourceLabels[o.source]||o.source}\n📦 Est. Arrival: ${o.arrival?fmtDate(o.arrival):'TBC'}\n━━━━━━━━━━━━━━━━\n*Items:*\n${o.desc}\n━━━━━━━━━━━━━━━━\n💰 Total: *${ugx(o.sell)}*\n✅ Deposit Paid: ${ugx(o.deposit||0)}\n${balance>0?`⚠ Balance Due: *${ugx(balance)}*`:`✅ *FULLY PAID*`}\n━━━━━━━━━━━━━━━━\nThank you for shopping with Sorah! 🌸\n📞 0705284663 · @sorah_ug`;
+  const phone=(o.phone||'').replace(/\D/g,'');
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-// ── INIT ──
+// ── SERVICE WORKER ──
+let swWaiting = null;
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          swWaiting = newWorker;
+          document.getElementById('update-banner').classList.add('show');
+        }
+      });
+    });
+  });
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
+  });
+}
+function applyUpdate() {
+  if (swWaiting) { swWaiting.postMessage('skipWaiting'); }
+  else { window.location.reload(); }
+}
+
 (function(){
   const now=new Date();
   document.getElementById('hdr-date').textContent=now.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
@@ -1233,9 +1127,8 @@ function shareOrderWhatsApp() {
   document.getElementById('e-date').value=now.toISOString().split('T')[0];
   document.getElementById('g-start').value=now.toISOString().split('T')[0];
   renderDash();
-  if(localStorage.getItem('shq_theme')==='light') { document.body.classList.add('light'); document.getElementById('theme-btn').textContent='🌙'; }
-  else { document.getElementById('theme-btn').textContent='☀️'; }
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+  if(localStorage.getItem('shq_theme')==='light'){document.body.classList.add('light');document.getElementById('theme-btn').textContent='🌙';}
+  else{document.getElementById('theme-btn').textContent='☀️';}
 })();
 </script>
 </body>
